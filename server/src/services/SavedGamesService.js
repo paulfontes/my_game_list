@@ -3,8 +3,9 @@ import { dbContext } from "../db/DbContext.js"
 
 
 class SavedGamesService {
-    getGames(creatorId) {
-        throw new Error("Method not implemented.")
+    async getGames(profileId) {
+        const getGames = await dbContext.SavedGames.find({ creatorId: profileId }).populate('creator', 'name picture')
+        return getGames
     }
     async saveGame(gameData, userInfo) {
         const savedGame = await dbContext.SavedGames.create(gameData)
