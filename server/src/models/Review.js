@@ -5,7 +5,7 @@ export const ReviewSchema = new Schema({
     gameId: { type: String, required: true, minLength: 1, maxLength: 100 },
     body: { type: String, required: true, minLength: 1, maxLength: 5000 },
     likes: [{ type: Schema.ObjectId }],
-    // dislikes: [{ type: Schema.ObjectId }],
+    dislikes: [{ type: Schema.ObjectId }],
     story: { type: Number, required: true, min: 1, max: 5 },
     gameplay: { type: Number, required: true, min: 1, max: 5 },
     graphics: { type: Number, required: true, min: 1, max: 5 },
