@@ -11,6 +11,7 @@ export class SavedGamesController extends BaseController {
         this.router
             .get('/:profileId', this.getSavedGames)
             .use(Auth0Provider.getAuthorizedUserInfo)
+            .put('', this.editSavedGame)
             .post('', this.saveGame)
     }
 
@@ -19,6 +20,19 @@ export class SavedGamesController extends BaseController {
             const creatorId = request.params.profileId
             const getGames = await savedGamesService.getGames(creatorId)
             response.send(getGames)
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+
+    async editSavedGame(request, response, next) {
+        try {
+            const gameData = request.body
+            const userInfo = request.userInfo
+            gameData.creatorId = userInfo.id
+            const editedGame = await savedGamesService.editSavedGame(userInfo, gameData)
+            response.send(editedGame)
         }
         catch (error) {
             next(error);
