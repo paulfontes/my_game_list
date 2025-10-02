@@ -7,7 +7,15 @@ class ReviewsService {
             const status = await dbContext.Reviews.findOne({ _id: reviewLike._id })
             const statusArray = status.dislikes.includes(reviewLike.creatorId)
             if (!statusArray) {
+
                 status.dislikes.push(reviewLike.creatorId)
+                const likeCheck = status.likes.includes(reviewLike.creatorId)
+                if (likeCheck) {
+                    const index = status.likes.findIndex((l) => l._id == userInfo._id)
+                    status.likes.splice(index, 1)
+                    status.save()
+                    return status
+                }
                 status.save()
                 return status
             }
@@ -20,6 +28,13 @@ class ReviewsService {
         const statusArray = status.likes.includes(reviewLike.creatorId)
         if (!statusArray) {
             status.likes.push(reviewLike.creatorId)
+            const dislikeCheck = status.dislikes.includes(reviewLike.creatorId)
+            if (dislikeCheck) {
+                const index = status.dislikes.findIndex((l) => l._id == userInfo._id)
+                status.dislikes.splice(index, 1)
+                status.save()
+                return status
+            }
             status.save()
             return status
         }
