@@ -3,6 +3,10 @@ import { Forbidden } from "../utils/Errors.js"
 
 class ReviewsService {
     async changeLikedStatus(reviewLike, userInfo) {
+        const safetyCheck = await dbContext.Reviews.findOne({ _id: reviewLike._id })
+        if (safetyCheck == null) {
+            throw new Error('This review does not exist')
+        }
         if (!reviewLike.liked) {
             const status = await dbContext.Reviews.findOne({ _id: reviewLike._id })
             const statusArray = status.dislikes.includes(reviewLike.creatorId)
