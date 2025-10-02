@@ -9,9 +9,20 @@ export class SavedGamesController extends BaseController {
     constructor() {
         super('api/savedgames')
         this.router
-            .get('')
+            .get('/:profileId', this.getSavedGames)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.saveGame)
+    }
+
+    async getSavedGames(request, response, next) {
+        try {
+            const creatorId = request.params.profileId
+            const getGames = await savedGamesService.getGames(creatorId)
+            response.send(getGames)
+        }
+        catch (error) {
+            next(error);
+        }
     }
 
 
