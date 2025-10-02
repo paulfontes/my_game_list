@@ -1,20 +1,34 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController.js";
 import { reviewsService } from "../services/ReviewsService.js";
+import { request } from "express";
 
 export class ReviewsController extends BaseController {
     constructor() {
         super('api/reviews')
         this.router
             .get('', this.getReviewsByGameId)
+            .get('/:profileId', this.getReviewsByProfileId)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createReview)
+            .delete('', this.deleteReview)
     }
 
     async getReviewsByGameId(request, response, next) {
         try {
             const gameData = request.body
             const reviews = await reviewsService.getReviewsByGameId(gameData)
+            response.send(reviews)
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+
+    async getReviewsByProfileId(request, response, next) {
+        try {
+            const profileId = request.params.profileId
+            const reviews = await reviewsService.getReviewsByProfileId(profileId)
             response.send(reviews)
         }
         catch (error) {
@@ -29,6 +43,18 @@ export class ReviewsController extends BaseController {
             reviewData.creatorId = userInfo.id
             const newReview = await reviewsService.createReview(reviewData)
             response.send(newReview)
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+
+    async deleteReview(request, response, next) {
+        try {
+            const userInfo = request.userInfo.id
+            const reviewData = request.body
+            const deletedReview = await reviewsService.deleteReview(reviewData, userInfo)
+            response.send('review has perished')
         }
         catch (error) {
             next(error);
