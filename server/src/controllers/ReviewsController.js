@@ -6,8 +6,20 @@ export class ReviewsController extends BaseController {
     constructor() {
         super('api/reviews')
         this.router
+            .get('', this.getReviewsByGameId)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createReview)
+    }
+
+    async getReviewsByGameId(request, response, next) {
+        try {
+            const gameData = request.body
+            const reviews = await reviewsService.getReviewsByGameId(gameData)
+            response.send(reviews)
+        }
+        catch (error) {
+            next(error);
+        }
     }
 
     async createReview(request, response, next) {
