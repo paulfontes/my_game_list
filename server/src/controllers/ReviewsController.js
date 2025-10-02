@@ -10,6 +10,7 @@ export class ReviewsController extends BaseController {
             .get('', this.getReviewsByGameId)
             .get('/:profileId', this.getReviewsByProfileId)
             .use(Auth0Provider.getAuthorizedUserInfo)
+            .put('', this.changeLikedStatus)
             .post('', this.createReview)
             .delete('', this.deleteReview)
     }
@@ -30,6 +31,18 @@ export class ReviewsController extends BaseController {
             const profileId = request.params.profileId
             const reviews = await reviewsService.getReviewsByProfileId(profileId)
             response.send(reviews)
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    async changeLikedStatus(request, response, next) {
+        try {
+            const userInfo = request.userInfo
+            const reviewLike = request.body
+            reviewLike.creatorId = userInfo.id
+            const review = await reviewsService.changeLikedStatus(reviewLike, userInfo)
+            response.send(review)
         }
         catch (error) {
             next(error);

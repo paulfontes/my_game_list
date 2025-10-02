@@ -2,6 +2,18 @@ import { dbContext } from "../db/DbContext.js"
 import { Forbidden } from "../utils/Errors.js"
 
 class ReviewsService {
+    async changeLikedStatus(reviewLike, userInfo) {
+        const status = await dbContext.Reviews.findOne({ _id: reviewLike._id })
+        const statusArray = status.likes.includes(reviewLike.creatorId)
+        if (!statusArray) {
+            status.likes.push(reviewLike.creatorId)
+            status.save()
+            return
+        }
+        const index = status.likes.findIndex((l) => l._id == userInfo._id)
+        status.likes.splice(index, 1)
+        status.save()
+    }
 
     async deleteReview(reviewData, userInfo) {
         const deletedReview = await dbContext.Reviews.findOne({ _id: reviewData._id })
