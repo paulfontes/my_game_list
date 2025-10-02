@@ -10,6 +10,7 @@ export const ReviewSchema = new Schema({
     gameplay: { type: Number, required: true, min: 1, max: 5 },
     graphics: { type: Number, required: true, min: 1, max: 5 },
     replayAbility: { type: Number, required: true, min: 1, max: 5 },
+
 },
     {
         timestamps: true, toJSON: { virtuals: true }, versionKey: false
