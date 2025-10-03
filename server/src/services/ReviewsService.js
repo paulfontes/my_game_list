@@ -84,7 +84,6 @@ class ReviewsService {
         status.likes.splice(index, 1)
         status.save()
     }
-
     async deleteReview(reviewData, userInfo) {
         const deletedReview = await dbContext.Reviews.findOne({ _id: reviewData._id })
         if (deletedReview.creatorId != userInfo) {
@@ -92,7 +91,6 @@ class ReviewsService {
         }
         const deleteReview = await dbContext.Reviews.deleteOne({ _id: deletedReview._id })
     }
-
     async getReviewsByGameId(gameData) {
         const reviews = await dbContext.Reviews.find({ gameId: gameData.gameId }).populate('creator', 'name picture')
         return reviews
