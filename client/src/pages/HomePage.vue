@@ -28,16 +28,16 @@ async function getGames() {
 </script>
 
 <template>
-  <main class="container-fluid bg-black ">
+  <main class="container-fluid bg-black position-relative ">
     <section class="row position-relative back-img">
       <div class="col-12 text-center text-white mt-5 text-shadow">
         <h1 class="height mb-0">ALL GAMES</h1>
       </div>
-      <div class="col-12 text-center text-white filter-shadow position-absolute">
+      <div class="col-12 text-center text-white filter-shadow filter-position">
         <span><i class="mdi mdi-filter-variant"></i></span>
       </div>
       <div class="col-12 text-center text-white d-flex justify-content-center top-page-buttons">
-        <span class="d-flex gap-5">
+        <span class="mobile-view-page-buttons gap-5">
           <img class="page-button-left img-fluid" src="../assets/img/page button.png" alt="first page button">
           <img class="page-button-left img-fluid" src="../assets/img/page button.png" alt="previous page button">
           <p class="mt-2">Page 1 of 99</p>
@@ -46,12 +46,11 @@ async function getGames() {
         </span>
       </div>
     </section>
-    <section class="row game-card">
-      <div v-for="game in games" :key="game.id" class="col-lg-2 col-md-4 g-5">
+    <section class="row game-card ">
+      <div v-for="game in games" :key="game.id" class="col-xl-3 col-lg-4 g-5 game-card-col">
         <GameCard :gameProp="game" />
       </div>
     </section>
-
   </main>
 </template>
 
@@ -80,7 +79,7 @@ main {
 .filter-shadow {
   font-size: 60px;
   text-shadow: 4px 4px 1px rgb(0, 0, 0);
-  top: 150px;
+
 }
 
 .filter-shadow:hover {
@@ -104,9 +103,36 @@ main {
   font-style: normal;
 }
 
-@media screen {
+@media(max-width:584px) {
+  .page-button-left {
+    margin: 20px 40px;
+  }
+
+  .page-button-right {
+    margin: 20px 40px;
+  }
+}
+
+@media(min-width: 584px) {
   .game-card {
     padding: 100px;
   }
+
+  .mobile-view-page-buttons {
+    display: flex;
+  }
+
+  .filter-position {
+    position: absolute;
+    top: 150px;
+  }
+}
+
+@media(min-width:592px) {
+  .game-card {
+    position: absolute;
+    top: 275px;
+  }
+
 }
 </style>

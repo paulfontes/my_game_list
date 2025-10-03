@@ -15,7 +15,7 @@ const props = defineProps({
             <img :src="gameProp.coverArt" alt="" class="img-fluid cover-img">
         </div>
         <div class="card-body">
-            hello
+            <h5>{{ gameProp.title }}</h5>
         </div>
     </div>
 </template>

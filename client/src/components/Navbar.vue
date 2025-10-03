@@ -21,12 +21,15 @@ watch(theme, () => {
     <div class="container-fluid navbar-color py-2">
       <section class="row justify-content-evenly">
         <div class="col-md-3">
-          <RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center">
+          <RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center nav-position">
             <img class="navbar-brand" alt="logo" src="\src\assets\img\game_site_logo.png" height="55" />
             <b class="fs-2 navbar-text">My Game List</b>
           </RouterLink>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-1 pt-2 order-md-last d-flex nav-position">
+          <Login />
+        </div>
+        <div class="col-md-4 d-flex nav-position">
           <!-- collapse button -->
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-links"
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,15 +59,13 @@ watch(theme, () => {
           </div>
           <!-- LOGIN COMPONENT HERE -->
         </div>
-        <div class="col-md-4 pt-3">
+        <div class="col-md-4 pt-3 ">
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         </div>
-        <div class="col-md-1 pt-3">
-          <Login />
-        </div>
+
       </section>
     </div>
   </nav>
@@ -108,5 +109,11 @@ a {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+}
+
+@media(max-width:1056px) {
+  .nav-position {
+    justify-content: center;
+  }
 }
 </style>
