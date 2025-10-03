@@ -1,8 +1,14 @@
 <script setup>
+import { AppState } from '@/AppState.js';
+import GameCard from '@/components/GameCard.vue';
 import { gamesService } from '@/services/GamesService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
+
+
+
+const games = computed(() => AppState.games)
 
 onMounted(() =>
   getGames()
@@ -40,6 +46,12 @@ async function getGames() {
         </span>
       </div>
     </section>
+    <section class="row game-card">
+      <div v-for="game in games" :key="game.id" class="col-lg-2 col-md-4 g-5">
+        <GameCard :gameProp="game" />
+      </div>
+    </section>
+
   </main>
 </template>
 
@@ -90,5 +102,11 @@ main {
   font-family: "Inknut Antiqua", serif;
   font-weight: 300;
   font-style: normal;
+}
+
+@media screen {
+  .game-card {
+    padding: 100px;
+  }
 }
 </style>

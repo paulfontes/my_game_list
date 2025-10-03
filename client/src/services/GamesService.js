@@ -17,7 +17,6 @@ class GamesService {
         const response = await gameApi.get('/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_size=40')
         const games = response.data.results.map((game) => new Game(game))
         AppState.games = games
-        logger.log(AppState.games)
     }
 
 }
