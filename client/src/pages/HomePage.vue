@@ -1,12 +1,16 @@
 <script setup>
+import { gamesService } from '@/services/GamesService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
+import { onMounted } from 'vue';
 
-
+onMounted(() =>
+  getGames()
+)
 
 async function getGames() {
   try {
-
+    await gamesService.getGames()
   }
   catch (error) {
     Pop.error(error);
