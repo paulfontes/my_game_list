@@ -1,7 +1,45 @@
 import { dbContext } from "../db/DbContext.js"
-import { Forbidden } from "../utils/Errors.js"
+import { BadRequest, Forbidden } from "../utils/Errors.js"
+
+
+// [{userId: oid, value: 1|-1|0}]
+
 
 class ReviewsService {
+
+    /**
+     * Adds and removes as needed from likes and dislikes based on reviewLike.liked boolean
+     * @param {{ _id: string, liked: boolean }} reviewLike 
+     * @param {{ id:  any }} userInfo 
+     */
+    async toggleLikedStatus(reviewLike, userInfo) {
+        const review = await dbContext.Reviews.findById(reviewLike._id)
+        if (!review) { throw new BadRequest("Invalid Review Id") }
+
+        const hasLiked = review.likes.findIndex((l) => l.toString() == userInfo.id)
+        const hasDisliked = review.dislikes.findIndex((l) => l.toString() == userInfo.id)
+
+        if (reviewLike.liked && hasLiked == -1) {
+            review.likes.push(userInfo.id)
+            if (hasDisliked != -1) {
+                review.dislikes.splice(hasDisliked, 1)
+            }
+        }
+
+        if (!reviewLike.liked && hasDisliked == -1) {
+            review.dislikes.push(userInfo.id)
+            if (hasLiked != -1) {
+                review.likes.splice(hasLiked, 1)
+            }
+        }
+
+        review.markModified('likes')
+        review.markModified('dislikes')
+
+        await review.save()
+        return review
+    }
+
     async changeLikedStatus(reviewLike, userInfo) {
         const safetyCheck = await dbContext.Reviews.findOne({ _id: reviewLike._id })
         if (safetyCheck == null) {

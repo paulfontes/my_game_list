@@ -41,7 +41,7 @@ export class ReviewsController extends BaseController {
             const userInfo = request.userInfo
             const reviewLike = request.body
             reviewLike.creatorId = userInfo.id
-            const review = await reviewsService.changeLikedStatus(reviewLike, userInfo)
+            const review = await reviewsService.toggleLikedStatus(reviewLike, userInfo)
             response.send(review)
         }
         catch (error) {
