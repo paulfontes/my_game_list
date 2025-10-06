@@ -13,5 +13,6 @@ export class Game {
         this.userRating = data.userRating
         this.siteRating = data.rating
         this.ageRating = data.esrb_rating
+
     }
 }

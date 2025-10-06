@@ -8,7 +8,7 @@ import { RouterView } from 'vue-router';
   <header class="bg-black">
     <Navbar />
   </header>
-  <main>
+  <main class="bg-black">
     <RouterView />
   </main>
   <footer class=" text-center">

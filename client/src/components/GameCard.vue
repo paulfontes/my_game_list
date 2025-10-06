@@ -25,8 +25,7 @@ const props = defineProps({
 .cover-img {}
 
 .card-bg {
-    background-color: #222b59;
-    opacity: 63%;
+    background-color: rgba(#222b59, 0.63);
     color: white;
 }
 </style>

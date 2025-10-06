@@ -9,6 +9,8 @@ import { computed, onMounted } from 'vue';
 
 
 const games = computed(() => AppState.games)
+const nextPage = computed(() => AppState.nextPage)
+const previousPage = computed(() => AppState.previousPage)
 
 onMounted(() =>
   getGames()
@@ -24,11 +26,20 @@ async function getGames() {
   }
 }
 
+async function changePage(pageNumber) {
+  try {
+    await gamesService.changePage(pageNumber)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
 
 </script>
 
 <template>
-  <main class="container-fluid bg-black position-relative ">
+  <main class="container-fluid bg-black  position-relative ">
     <section class="row position-relative back-img">
       <div class="col-12 text-center text-white mt-5 text-shadow">
         <h1 class="height mb-0">ALL GAMES</h1>
@@ -36,25 +47,55 @@ async function getGames() {
       <div class="col-12 text-center text-white filter-shadow filter-position">
         <span><i class="mdi mdi-filter-variant"></i></span>
       </div>
-      <div class="col-12 text-center text-white d-flex justify-content-center top-page-buttons">
+      <div class="col-12 text-center text-white d-flex justify-content-center align-items-center top-page-buttons">
         <span class="mobile-view-page-buttons gap-5">
-          <img class="page-button-left img-fluid" src="../assets/img/page button.png" alt="first page button">
-          <img class="page-button-left img-fluid" src="../assets/img/page button.png" alt="previous page button">
+          <img @click="changePage()" type="button" class="page-button-left img-fluid"
+            src="../assets/img/page button.png" alt="first page button">
+          <img @click="changePage(previousPage)" type="button" class="page-button-left img-fluid"
+            src="../assets/img/page button.png" alt="previous page button">
           <p class="mt-2">Page 1 of 99</p>
-          <img class="page-button-right img-fluid" src="../assets/img/page button.png" alt="next page button">
-          <img class="page-button-right img-fluid" src="../assets/img/page button.png" alt="last page button">
+          <img @click="changePage(nextPage)" type="button" class="page-button-right img-fluid"
+            src="../assets/img/page button.png" alt="next page button">
+          <img @click="changePage()" type="button" class="page-button-right img-fluid"
+            src="../assets/img/page button.png" alt="last page button">
         </span>
       </div>
     </section>
-    <section class="row game-card ">
+    <section class="row game-card">
       <div v-for="game in games" :key="game.id" class="col-xl-3 col-lg-4 g-5 game-card-col">
         <GameCard :gameProp="game" />
+      </div>
+    </section>
+    <section class="row background-color">
+      <div class="col-12 text-center text-white d-flex justify-content-center align-items-center top-page-buttons">
+        <span class="mobile-view-page-buttons gap-5">
+          <img @click="changePage()" type="button" class="page-button-left img-fluid"
+            src="../assets/img/page button.png" alt="first page button">
+          <img @click="changePage(previousPage)" :disabled="previousPage == null" type="button"
+            class="page-button-left img-fluid" src="../assets/img/page button.png" alt="previous page button">
+          <p class="mt-2">Page 1 of 99</p>
+          <img @click="changePage(nextPage)" type="button" class="page-button-right img-fluid"
+            src="../assets/img/page button.png" alt="next page button">
+          <img @click="changePage()" type="button" class="page-button-right img-fluid"
+            src="../assets/img/page button.png" alt="last page button">
+        </span>
       </div>
     </section>
   </main>
 </template>
 
+
 <style scoped lang="scss">
+.game-card-col {}
+
+.background-color {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  flex-grow: 1;
+}
+
 main {
   min-height: 100vh;
 }
@@ -62,6 +103,7 @@ main {
 .back-img {
   min-height: 500px;
   background-image: linear-gradient(to bottom, rgba(2, 2, 2, 0.3)55%, rgb(0, 0, 0)), url(../assets/img/midnight-blue-light-abstract-dzy61lzyxpdczdbm_1.png);
+
 
 }
 
@@ -115,7 +157,7 @@ main {
 
 @media(min-width: 584px) {
   .game-card {
-    padding: 100px;
+    padding: 0px 100px;
   }
 
   .mobile-view-page-buttons {
@@ -129,10 +171,7 @@ main {
 }
 
 @media(min-width:592px) {
-  .game-card {
-    position: absolute;
-    top: 275px;
-  }
+  .game-card {}
 
 }
 </style>

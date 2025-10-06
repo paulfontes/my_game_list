@@ -8,6 +8,9 @@ export const AppState = reactive({
   account: null,
 
   /** @type {import('./models/Game.js').Game[]} user info from the database*/
-  games: []
+  games: [],
+
+  nextPage: null,
+  previousPage: null
 })
 
