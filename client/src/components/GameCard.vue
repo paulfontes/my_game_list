@@ -16,6 +16,10 @@ const props = defineProps({
         </div>
         <div class="card-body">
             <h5>{{ gameProp.title }}</h5>
+            <div v-for="platform in gameProp.platforms" :key="platform.id" class="d-flex justify-content-apart">
+                <p>{{ platform.platform.name }}</p>
+            </div>
+            <p><i class="mdi mdi-star text-yellow"></i> {{ gameProp.siteRating }}</p>
         </div>
     </div>
 </template>

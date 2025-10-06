@@ -21,6 +21,7 @@ onMounted(() =>
 async function getGames() {
   try {
     await gamesService.getGames()
+    logger.log(AppState.games)
   }
   catch (error) {
     Pop.error(error);
