@@ -11,6 +11,7 @@ import { computed, onMounted } from 'vue';
 const games = computed(() => AppState.games)
 const nextPage = computed(() => AppState.nextPage)
 const previousPage = computed(() => AppState.previousPage)
+const currentPage = computed(() => AppState.currentPage)
 
 onMounted(() =>
   getGames()
@@ -47,17 +48,25 @@ async function changePage(pageNumber) {
       <div class="col-12 text-center text-white filter-shadow filter-position">
         <span><i class="mdi mdi-filter-variant"></i></span>
       </div>
-      <div class="col-12 text-center text-white d-flex justify-content-center align-items-center top-page-buttons">
+      <div class="col-12 text-center text-white d-flex justify-content-center align-items-center top-page-buttons ">
         <span class="mobile-view-page-buttons gap-5">
-          <img @click="changePage()" type="button" class="page-button-left img-fluid"
-            src="../assets/img/page button.png" alt="first page button">
-          <img @click="changePage(previousPage)" type="button" class="page-button-left img-fluid"
-            src="../assets/img/page button.png" alt="previous page button">
-          <p class="mt-2">Page 1 of 99</p>
-          <img @click="changePage(nextPage)" type="button" class="page-button-right img-fluid"
-            src="../assets/img/page button.png" alt="next page button">
-          <img @click="changePage()" type="button" class="page-button-right img-fluid"
-            src="../assets/img/page button.png" alt="last page button">
+          <button class="btn page-button-disabled">
+            <img @click="changePage()" type="button" class="page-button-left img-fluid"
+              src="../assets/img/page button.png" alt="first page button">
+          </button>
+          <button :disabled="previousPage == null" class="btn page-button-disabled">
+            <img @click="changePage(previousPage)" type="button" class="page-button-left img-fluid"
+              src="../assets/img/page button.png" alt="previous page button">
+          </button>
+          <p class="mt-2">Page {{ currentPage }} </p>
+          <button class="btn page-button-disabled">
+            <img @click="changePage(nextPage)" type="button" class="page-button-right img-fluid"
+              src="../assets/img/page button.png" alt="next page button">
+          </button>
+          <button class="btn page-button-disabled">
+            <img @click="changePage()" type="button" class="page-button-right img-fluid"
+              src="../assets/img/page button.png" alt="last page button">
+          </button>
         </span>
       </div>
     </section>
@@ -66,7 +75,7 @@ async function changePage(pageNumber) {
         <GameCard :gameProp="game" />
       </div>
     </section>
-    <section class="row background-color">
+    <section class="row background-color page-button-disabled">
       <div class="col-12 text-center text-white d-flex justify-content-center align-items-center top-page-buttons">
         <span class="mobile-view-page-buttons gap-5">
           <img @click="changePage()" type="button" class="page-button-left img-fluid"
@@ -87,6 +96,10 @@ async function changePage(pageNumber) {
 
 <style scoped lang="scss">
 .game-card-col {}
+
+.page-button-disabled {
+  border: none;
+}
 
 .background-color {
   background-color: black;

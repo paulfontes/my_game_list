@@ -16,9 +16,12 @@ class GamesService {
     async changePage(pageNumber) {
         const response = await gameApi.get(`${pageNumber}`)
         this.gameHandler(response)
+        const currentPage = pageNumber.slice(72, 73)
+        console.log(currentPage)
+        AppState.currentPage = currentPage
     }
     async getGames() {
-        const response = await gameApi.get('/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_size=40')
+        const response = await gameApi.get('/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_size=40&page_1')
         this.gameHandler(response)
 
     }

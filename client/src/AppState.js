@@ -11,6 +11,7 @@ export const AppState = reactive({
   games: [],
 
   nextPage: null,
-  previousPage: null
+  previousPage: null,
+  currentPage: 1
 })
 
