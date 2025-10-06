@@ -11,6 +11,7 @@ import { computed, onMounted } from 'vue';
 const games = computed(() => AppState.games)
 const nextPage = computed(() => AppState.nextPage)
 const previousPage = computed(() => AppState.previousPage)
+const totalPages = computed(() => AppState.totalPages)
 const currentPage = computed(() => AppState.currentPage)
 
 onMounted(() =>
@@ -27,9 +28,9 @@ async function getGames() {
   }
 }
 
-async function changePage(pageNumber) {
+async function changePage(pageNumber, num) {
   try {
-    await gamesService.changePage(pageNumber)
+    await gamesService.changePage(pageNumber, num)
   }
   catch (error) {
     Pop.error(error);
@@ -50,21 +51,21 @@ async function changePage(pageNumber) {
       </div>
       <div class="col-12 text-center text-white d-flex justify-content-center align-items-center top-page-buttons ">
         <span class="mobile-view-page-buttons gap-5">
-          <button class="btn page-button-disabled">
-            <img @click="changePage()" type="button" class="page-button-left img-fluid"
+          <button :disabled="currentPage == 1" class="btn page-button-disabled">
+            <img @click="changePage(-10000)" type="button" class="page-button-left img-fluid"
               src="../assets/img/page button.png" alt="first page button">
           </button>
           <button :disabled="previousPage == null" class="btn page-button-disabled">
-            <img @click="changePage(previousPage)" type="button" class="page-button-left img-fluid"
+            <img @click="changePage(previousPage, -1)" type="button" class="page-button-left img-fluid"
               src="../assets/img/page button.png" alt="previous page button">
           </button>
-          <p class="mt-2">Page {{ currentPage }} </p>
-          <button class="btn page-button-disabled">
-            <img @click="changePage(nextPage)" type="button" class="page-button-right img-fluid"
+          <p class="mt-2">Page {{ currentPage }} of {{ totalPages }} </p>
+          <button :disabled="currentPage == totalPages" class="btn page-button-disabled">
+            <img @click="changePage(nextPage, 1)" type="button" class="page-button-right img-fluid"
               src="../assets/img/page button.png" alt="next page button">
           </button>
-          <button class="btn page-button-disabled">
-            <img @click="changePage()" type="button" class="page-button-right img-fluid"
+          <button :disabled="currentPage == totalPages" class="btn page-button-disabled">
+            <img @click="changePage(nextPage, 10000)" type="button" class="page-button-right img-fluid"
               src="../assets/img/page button.png" alt="last page button">
           </button>
         </span>
@@ -77,17 +78,23 @@ async function changePage(pageNumber) {
     </section>
     <section class="row background-color page-button-disabled">
       <div class="col-12 text-center text-white d-flex justify-content-center align-items-center top-page-buttons">
-        <span class="mobile-view-page-buttons gap-5">
-          <img @click="changePage()" type="button" class="page-button-left img-fluid"
+        <button :disabled="currentPage == 1" class="btn page-button-disabled">
+          <img @click="changePage(-10000)" type="button" class="page-button-left img-fluid"
             src="../assets/img/page button.png" alt="first page button">
-          <img @click="changePage(previousPage)" :disabled="previousPage == null" type="button"
-            class="page-button-left img-fluid" src="../assets/img/page button.png" alt="previous page button">
-          <p class="mt-2">Page 1 of 99</p>
-          <img @click="changePage(nextPage)" type="button" class="page-button-right img-fluid"
+        </button>
+        <button :disabled="previousPage == null" class="btn page-button-disabled">
+          <img @click="changePage(previousPage, -1)" type="button" class="page-button-left img-fluid"
+            src="../assets/img/page button.png" alt="previous page button">
+        </button>
+        <p class="mt-2">Page {{ currentPage }} of {{ totalPages }} </p>
+        <button :disabled="currentPage == totalPages" class="btn page-button-disabled">
+          <img @click="changePage(nextPage, 1)" type="button" class="page-button-right img-fluid"
             src="../assets/img/page button.png" alt="next page button">
-          <img @click="changePage()" type="button" class="page-button-right img-fluid"
+        </button>
+        <button :disabled="currentPage == totalPages" class="btn page-button-disabled">
+          <img @click="changePage(nextPage, 10000)" type="button" class="page-button-right img-fluid"
             src="../assets/img/page button.png" alt="last page button">
-        </span>
+        </button>
       </div>
     </section>
   </main>

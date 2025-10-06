@@ -13,12 +13,13 @@ const gameApi = axios.create({
 
 
 class GamesService {
-    async changePage(pageNumber) {
+    async changePage(pageNumber, num) {
         const response = await gameApi.get(`${pageNumber}`)
         this.gameHandler(response)
-        const currentPage = pageNumber.slice(72, 73)
-        console.log(currentPage)
-        AppState.currentPage = currentPage
+        if (num >= AppState.totalPages) {
+            AppState.currentPage = AppState.totalPages
+        }
+        AppState.currentPage = AppState.currentPage + num
     }
     async getGames() {
         const response = await gameApi.get('/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_size=40&page_1')
@@ -31,6 +32,8 @@ class GamesService {
         AppState.games = games
         AppState.nextPage = response.data.next
         AppState.previousPage = response.data.previous
+        const gameNumber = response.data.count
+        AppState.totalPages = Math.ceil(gameNumber / 40)
         logger.log(AppState.nextPage, AppState.previousPage);
     }
 
