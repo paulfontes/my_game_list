@@ -74,7 +74,9 @@ async function changePage(pageNumber, num) {
     </section>
     <section class="row game-card">
       <div v-for="game in games" :key="game.id" class="col-xl-3 col-lg-4 g-5 game-card-col">
-        <GameCard :gameProp="game" />
+        <RouterLink :to="{ name: 'GameDetails', params: { gameId: game.id } }">
+          <GameCard :gameProp="game" />
+        </RouterLink>
       </div>
     </section>
     <section class="row background-color page-button-disabled">
@@ -164,6 +166,10 @@ main {
   font-family: "Inknut Antiqua", serif;
   font-weight: 300;
   font-style: normal;
+}
+
+a {
+  text-decoration: unset;
 }
 
 @media(max-width:584px) {

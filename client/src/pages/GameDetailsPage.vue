@@ -4,7 +4,11 @@
 
 
 <template>
-    hiowdy
+    <main class="container-fluid">
+        <section class="row">
+
+        </section>
+    </main>
 </template>
 
 
