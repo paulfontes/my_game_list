@@ -85,7 +85,9 @@ async function sendFormData() {
         <div class="col text-center text-white">
           <h5><span class="mdi mdi-arrow-down-bold-outline"></span> Banner Preview <span
               class="mdi mdi-arrow-down-bold-outline"></span></h5>
-          <img class="banner-img my-4" :src="account.bannerImg" alt="">
+          <img v-if="account.bannerImg" class="banner-img my-4" :src="account.bannerImg" alt="">
+          <img v-else class="banner-img my-4"
+            src="https://www.altavia.hu/wp-content/uploads/2020/11/Hero-Banner-Placeholder-Light-1024x480-1.png" alt="">
         </div>
       </section>
     </section>
