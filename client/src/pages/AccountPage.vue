@@ -1,20 +1,38 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { AppState } from '../AppState.js';
+import { Pop } from '@/utils/Pop.js';
+import { logger } from '@/utils/Logger.js';
+import { gamesService } from '@/services/GamesService.js';
+import { accountService } from '@/services/AccountService.js';
 
 const account = computed(() => AppState.account)
 
 
 const formData = ref({
 
-  name: account.value.name,
-  picture: account.value.picture,
-  bio: account.value.bio,
-  bannerImg: account.value.bannerImg
+  name: '',
+  picture: '',
+  bio: '',
+  bannerImg: 'https://www.altavia.hu/wp-content/uploads/2020/11/Hero-Banner-Placeholder-Light-1024x480-1.png'
 
 })
 
+watch(account, () => {
+  formData.value = { ...account.value }
 
+}, { immediate: true })
+
+async function sendFormData() {
+  try {
+    await accountService.updateAccount(formData.value)
+    Pop.success('Your Profile has been updated!')
+  }
+  catch (error) {
+    Pop.error('Failed to Save Profile Changes!', error);
+    logger.log('Failed to Save Profile Changes!', error)
+  }
+}
 
 
 
@@ -25,7 +43,7 @@ const formData = ref({
 
 <template>
   <main class="container-fluid back-img">
-    <section class="row justify-content-center pt-5">
+    <section v-if="account" class="row justify-content-center pt-5">
       <div class="col-4 text-white">
         <h1>{{ account.name }}'s Account</h1>
       </div>
@@ -33,15 +51,16 @@ const formData = ref({
         <img :src="account.picture" class="profile-pic" alt="">
       </div>
       <div class="col-8 mt-4 text-white">
-        <form action="">
+        <form @submit.prevent="sendFormData()">
           <span class="d-flex gap-5">
             <div class="w-50">
               <label for="account-name">Username:</label>
-              <input id="account-name" name="account-name" v-model="formData.name" type="text" class="form-control">
+              <input required id="account-name" name="account-name" v-model="formData.name" type="text"
+                class="form-control">
             </div>
             <div class="w-50">
               <label for="account-picture"><span class="mdi mdi-arrow-up-bold-outline"></span> Profile Picture:</label>
-              <input id="account-picture" name="account-picture" v-model="formData.picture" type="text"
+              <input required id="account-picture" name="account-picture" v-model="formData.picture" type="url"
                 class="form-control">
             </div>
           </span>
@@ -52,11 +71,11 @@ const formData = ref({
           </div>
           <div class="mt-4">
             <label for="account-banner">Profile Banner:</label>
-            <input id="account-banner" name="account-banner" v-model="formData.bannerImg" type="text"
+            <input id="account-banner" name="account-banner" v-model="formData.bannerImg" type="url"
               class="form-control">
           </div>
           <div class="text-end">
-            <button @submit.prevent="" class="btn btn-success mt-2">
+            <button type="submit" class="btn btn-success mt-2">
               Submit
             </button>
           </div>
@@ -66,8 +85,7 @@ const formData = ref({
         <div class="col text-center text-white">
           <h5><span class="mdi mdi-arrow-down-bold-outline"></span> Banner Preview <span
               class="mdi mdi-arrow-down-bold-outline"></span></h5>
-          <img class="banner-img my-4"
-            src="https://www.altavia.hu/wp-content/uploads/2020/11/Hero-Banner-Placeholder-Light-1024x480-1.png" alt="">
+          <img class="banner-img my-4" :src="account.bannerImg" alt="">
         </div>
       </section>
     </section>
@@ -77,6 +95,10 @@ const formData = ref({
 <style scoped lang="scss">
 .profile-pic {
   border-radius: 50%;
+  height: 120px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  object-position: center;
 }
 
 .back-img {

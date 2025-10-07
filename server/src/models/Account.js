@@ -8,7 +8,7 @@ export const AccountSchema = new Schema(
     name: { type: String, required: true },
     picture: { type: String },
     bio: { type: String, minLength: 1, maxLength: 500 },
-    coverImg: { type: String, minLength: 1, maxLength: 500 },
+    bannerImg: { type: String, minLength: 1, maxLength: 500 },
     favGameName: { type: String, minLength: 1, maxLength: 300 },
     favGameImg: { type: String, minLength: 1, maxLength: 500 },
   },
