@@ -36,21 +36,24 @@ const formData = ref({
         <form action="">
           <span class="d-flex gap-5">
             <div class="w-50">
-              <label for="username">Username:</label>
-              <input type="text" class="form-control">
+              <label for="account-name">Username:</label>
+              <input id="account-name" name="account-name" v-model="formData.name" type="text" class="form-control">
             </div>
             <div class="w-50">
-              <label for=""><span class="mdi mdi-arrow-up-bold-outline"></span> Profile Picture:</label>
-              <input type="text" class="form-control">
+              <label for="account-picture"><span class="mdi mdi-arrow-up-bold-outline"></span> Profile Picture:</label>
+              <input id="account-picture" name="account-picture" v-model="formData.picture" type="text"
+                class="form-control">
             </div>
           </span>
           <div class="mt-4">
-            <label for="">Profile Bioligio:</label>
-            <textarea name="" id="" class="form-control bio-box"></textarea>
+            <label for="account-bio">Profile Bio:</label>
+            <textarea id="account-bio" name="account-bio" v-model="formData.bio"
+              class="form-control bio-box"></textarea>
           </div>
           <div class="mt-4">
-            <label for="">Profile Banner:</label>
-            <input type="text" class="form-control">
+            <label for="account-banner">Profile Banner:</label>
+            <input id="account-banner" name="account-banner" v-model="formData.bannerImg" type="text"
+              class="form-control">
           </div>
           <div class="text-end">
             <button @submit.prevent="" class="btn btn-success mt-2">
