@@ -18,24 +18,41 @@
             backend server as well as the client and our data is sourced both from our own database on MongoDB and RAWGs
             video game API. Our primary development tool was Visual Studio Code. All of this was done during our time
             interning here at Boise Code Works.</p>
-          <p>Codeworks Link</p>
-          <p>Vue Link</p>
-          <p>RAWG link</p>
-          <p>Postman Link</p>
-          <p>MongoDB Link</p>
-          <p>Vscode Link</p>
+          <h5>Links:</h5>
+          <p><a href="https://boisecodeworks.com/" title="https://boisecodeworks.com/" target="_blank">Codeworks <i
+                class="mdi mdi-link"></i></a></p>
+          <p><a href="https://vuejs.org/" title="https://vuejs.org/" target="_blank">Vue <i
+                class="mdi mdi-link"></i></a></p>
+          <p><a href="https://rawg.io/apidocs" title="https://rawg.io/apidocs" target="_blank">RAWG <i
+                class="mdi mdi-link"></i></a></p>
+          <p><a href="https://www.postman.com/" title="https://www.postman.com/" target="_blank">Postman <i
+                class="mdi mdi-link"></i></a></p>
+          <p><a href="https://www.mongodb.com/products/platform/cloud"
+              title="https://www.mongodb.com/products/platform/cloud" target="_blank">MongoDB <i
+                class="mdi mdi-link"></i></a></p>
+          <p><a href="https://code.visualstudio.com/" title="https://code.visualstudio.com/" target="_blank">Vscode <i
+                class="mdi mdi-link"></i></a></p>
           <section class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 text-center">
               <h5>
                 Paul Fontes
               </h5>
-              <p><i class="mdi mdi-github"></i> <i class="mdi mdi-linkedin"></i></p>
+              <p><a href="https://github.com/paulfontes" target="_blank" title=" https://github.com/paulfontes"><i
+                    class="mdi mdi-github fs-1"></i></a> <a href="https://www.linkedin.com/in/paulfontes22/"
+                  title="https://www.linkedin.com/in/paulfontes22/" target="_blank"> <i
+                    class="mdi mdi-linkedin fs-1"></i>
+                </a>
+              </p>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3 text-center">
               <h5>
                 Chase McLain
               </h5>
-              <p><i class="mdi mdi-github"></i> <i class="mdi mdi-linkedin"></i></p>
+              <p><a href="https://github.com/Chase-McLain" target="_blank" title="https://github.com/Chase-McLain"><i
+                    class="mdi mdi-github fs-1"></i></a> <a href="https://www.linkedin.com/in/chase-mclain-3067b1383/"
+                  title="https://www.linkedin.com/in/chase-mclain-3067b1383//" target="_blank"> <i
+                    class="mdi mdi-linkedin fs-1"></i>
+                </a></p>
             </div>
           </section>
         </div>
@@ -62,6 +79,10 @@ img {
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
+}
+
+a {
+  text-decoration: unset;
 }
 
 .disclaimer {}
