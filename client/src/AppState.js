@@ -13,6 +13,8 @@ export const AppState = reactive({
   nextPage: null,
   previousPage: null,
   totalPages: 1,
-  currentPage: 1
+  currentPage: 1,
+  /** @type {import('./models/Game.js').Game} user info from the database*/
+  activeGame: null
 })
 

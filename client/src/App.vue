@@ -8,7 +8,7 @@ import { RouterView } from 'vue-router';
   <header class="bg-black">
     <Navbar />
   </header>
-  <main class="bg-black">
+  <main class="">
     <RouterView />
   </main>
   <footer class=" text-center">
@@ -16,4 +16,8 @@ import { RouterView } from 'vue-router';
   </footer>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+main {
+  background-color: rgb(50, 50, 50);
+}
+</style>
