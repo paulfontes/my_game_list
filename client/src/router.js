@@ -27,7 +27,11 @@ const routes = [
     name: 'GameDetails',
     component: loadPage('GameDetailsPage')
   },
-
+  {
+    path: '/profile/:accountId',
+    name: 'Profile',
+    component: loadPage('ProfilePage')
+  }
 ]
 
 export const router = createRouter({

@@ -13,6 +13,7 @@ const nextPage = computed(() => AppState.nextPage)
 const previousPage = computed(() => AppState.previousPage)
 const totalPages = computed(() => AppState.totalPages)
 const currentPage = computed(() => AppState.currentPage)
+const account = computed(() => AppState.account)
 
 onMounted(() =>
   getGames()

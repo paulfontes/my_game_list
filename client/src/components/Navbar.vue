@@ -1,9 +1,12 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
+import { AppState } from '@/AppState.js';
 
 const theme = ref(loadState('theme') || 'light')
+const account = computed(() => AppState.account)
+
 
 function toggleTheme() {
   theme.value = theme.value == 'light' ? 'dark' : 'light'
@@ -44,7 +47,8 @@ watch(theme, () => {
                     Home
                   </h4>
                 </RouterLink>
-                <RouterLink :to="{ name: 'About' }" class="btn nav-links selectable">
+                <RouterLink v-if="account" :to="{ name: 'Profile', params: { accountId: account.id } }"
+                  class="btn nav-links selectable">
                   <h4>
                     Profile
                   </h4>
