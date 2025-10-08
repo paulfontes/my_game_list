@@ -132,10 +132,12 @@ async function getActiveGame() {
             <div class="col-md-4 text-center text-black d-flex justify-content-center">
                 <div class="bg-white" v-if="activeGame.userRating">
                     <p>{{ activeGame.userRating }}/5</p>
+                    <img v-if="account" :src="account.picture" alt="profile picture" class="profile-pic">
+                    <p>Your Score</p>
                 </div>
                 <div class="bg-white w-50" v-else>
                     <p><i class="mdi mdi-star"></i></p>
-                    <img v-if="account" :src="account.picture" alt="">
+                    <img v-if="account" :src="account.picture" alt="profile picture" class="profile-pic">
                     <img v-else src="../assets/img/blank-profile-pic.png" alt="user rating" class="score-pic">
                     <p class="mt-2">Your Score goes here</p>
                 </div>
@@ -183,6 +185,7 @@ async function getActiveGame() {
         <section class="row">
             <div class="col-md-12">
                 <h3>Write A Review</h3>
+
             </div>
 
         </section>
@@ -249,5 +252,13 @@ main {
     object-position: center;
 
 
+}
+
+.profile-pic {
+    height: 75px;
+    object-fit: cover;
+    object-position: center;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
 }
 </style>
