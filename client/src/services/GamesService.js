@@ -14,6 +14,7 @@ const gameApi = axios.create({
 
 class GamesService {
     async getActiveGame(gameId) {
+        AppState.activeGame = null
         const response = await gameApi.get(`/api/games/${gameId}?key=b0d5907476a4461cadee527e4b2f0bdc`)
         AppState.activeGame = new Game(response.data)
     }

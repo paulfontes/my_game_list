@@ -9,6 +9,7 @@ import { useRoute } from 'vue-router';
 
 
 const activeGame = computed(() => AppState.activeGame)
+const account = computed(() => AppState.account)
 
 const route = useRoute()
 
@@ -83,7 +84,7 @@ async function getActiveGame() {
                         alt="Teen">
                     <img v-if="activeGame.ageRating.name == 'Everyone 10+'"
                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/ESRB_2013_Everyone_10%2B.svg/120px-ESRB_2013_Everyone_10%2B.svg.png"
-                        alt=" E 10+">
+                        alt=" E 10+" class="mb-2">
                     <img v-if="activeGame.ageRating.name == 'Adult Only'"
                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/ESRB_2013_Adults_Only_18%2B.svg/120px-ESRB_2013_Adults_Only_18%2B.svg.png"
                         alt="Adult">
@@ -97,25 +98,64 @@ async function getActiveGame() {
             </div>
         </section>
     </main>
-    <article class="container-fluid">
-        <section class="row mt-5">
-            <div class="col-md-12 mt-5 text-white box-width">
-                <span class="d-flex justify-content-around">
-                    <h1 class="fw-bold">{{ activeGame.title }}</h1>
-                    <span></span>
-                    <span class="text-end mt-1">
-                        <h5>{{ activeGame.releaseDate }}</h5>
-                        <h5>{{ activeGame.siteRating }}</h5>
-                        <h5>{{ activeGame.ageRating.name }}</h5>
-                    </span>
-                </span>
-            </div>
-        </section>
-        <section class="row text-white">
-            <h3>Description:</h3>
-            <div v-html="activeGame.description"></div>
+    <article v-if="activeGame" class="container-fluid">
+        <section class="row mt-5 mt-5 text-white justify-content-evenly">
+
+            <span class="col-5 mt-5">
+                <h1 class="fw-bold mt-4">{{ activeGame.title }}</h1>
+            </span>
+            <span class="text-end mt-5 col-5 box-width ">
+                <h5>{{ activeGame.releaseDate }}</h5>
+                <h5>{{ activeGame.siteRating }}</h5>
+                <h5>{{ activeGame.ageRating.name }}</h5>
+            </span>
         </section>
     </article>
+    <main v-if="activeGame" class="container text-white">
+        <section class="row  g-3">
+            <h3>Description:</h3>
+            <div v-html="activeGame.description" class=""></div>
+        </section>
+        <section class="row">
+            <div class="col-md-12 mt-4">
+                <h3>Genre: {{ activeGame.genre[0].name }}</h3>
+                <h3 class="my-4">Tags:</h3>
+            </div>
+            <div v-for="tag in activeGame.tags" :key="tag.name" class=" col-lg-3 col-md-4 col-sm-6  my-1">
+                <span class="bg-success rounded-pill p-1">{{ tag.name }}</span>
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-12 my-4">
+                <h3>Scores:</h3>
+            </div>
+            <div class="col-md-4 text-center text-black d-flex justify-content-center">
+                <div class="bg-white" v-if="activeGame.userRating">
+                    <p>{{ activeGame.userRating }}/5</p>
+                </div>
+                <div class="bg-white w-50" v-else>
+                    <p><i class="mdi mdi-star"></i></p>
+                    <img v-if="account" :src="account.picture" alt="">
+                    <img v-else src="../assets/img/blank-profile-pic.png" alt="user rating" class="score-pic">
+                    <p class="mt-2">Your Score goes here</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center text-black d-flex justify-content-center">
+                <div class="bg-white w-50 ">
+                    <p>{{ activeGame.siteRating }}/5</p>
+                    <img src="../assets/img/game_site_logo.png" alt="MGL rating" class="MGL score-pic">
+                    <h5 class="mt-2">MGL Score</h5>
+                </div>
+            </div>
+            <div class="col-md-4 text-center text-black d-flex justify-content-center">
+                <div class="bg-white w-50 ">
+                    <p>{{ activeGame.metaCritic }}</p>
+                    <img src="" alt="MetaCritic rating" class="score-pic">
+                    <h5 class="mt-2">MGL Score</h5>
+                </div>
+            </div>
+        </section>
+    </main>
 </template>
 
 
@@ -169,6 +209,14 @@ main {
 }
 
 .box-width {
-    width: 100%;
+    width: 46%;
+}
+
+.score-pic {
+    height: 75px;
+    object-fit: cover;
+    object-position: center;
+
+
 }
 </style>
