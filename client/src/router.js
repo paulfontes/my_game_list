@@ -26,7 +26,8 @@ const routes = [
     path: '/gameDetails/:gameId',
     name: 'GameDetails',
     component: loadPage('GameDetailsPage')
-  }
+  },
+
 ]
 
 export const router = createRouter({

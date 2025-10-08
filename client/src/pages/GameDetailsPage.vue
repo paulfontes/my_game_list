@@ -143,17 +143,48 @@ async function getActiveGame() {
             <div class="col-md-4 text-center text-black d-flex justify-content-center">
                 <div class="bg-white w-50 ">
                     <p>{{ activeGame.siteRating }}/5</p>
-                    <img src="../assets/img/game_site_logo.png" alt="MGL rating" class="MGL score-pic">
+                    <img src="../assets/img/game_site_logo.png" alt="MGL rating" class=" score-pic">
                     <h5 class="mt-2">MGL Score</h5>
                 </div>
             </div>
             <div class="col-md-4 text-center text-black d-flex justify-content-center">
                 <div class="bg-white w-50 ">
                     <p>{{ activeGame.metaCritic }}</p>
-                    <img src="" alt="MetaCritic rating" class="score-pic">
-                    <h5 class="mt-2">MGL Score</h5>
+                    <img src="../assets/img/Metacritic_M_1.png" alt="MetaCritic rating" class="score-pic">
+                    <h5 class="mt-2">MetaCritic Score</h5>
                 </div>
             </div>
+        </section>
+        <section class="row mt-4">
+            <div class="col-6">
+                <h3>Stores:</h3>
+                <div v-for="Store in activeGame.stores" :key="Store.store.id">
+                    {{ Store.store.name }}
+                </div>
+            </div>
+            <div class="col-6">
+                <h3>Platforms: </h3>
+                <div v-for="platform in activeGame.platforms" :key="platform.platform.id">
+                    {{ platform.platform.name }}
+                </div>
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-12">
+                <h3>
+                    Requirements:
+                </h3>
+            </div>
+            <div class="col-12">
+                <p v-for="requirements in activeGame.platforms" class="text-white">{{ requirements.requirements.minimum
+                    }}</p>
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-md-12">
+                <h3>Write A Review</h3>
+            </div>
+
         </section>
     </main>
 </template>
