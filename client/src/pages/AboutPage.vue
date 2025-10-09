@@ -6,8 +6,8 @@
   <div class="about">
     <main class="container-fluid background-img">
       <section class="row justify-content-evenly">
-        <div class="col-md-5">
-          <img class="mt-5 img-fluid" src="../assets/img/Rectangle 83.png" alt="">
+        <div class="col-md-12 col-sm-12 col-lg-6">
+          <img class="mt-5 img-us img-fluid" src="../assets/img/IMG_3319.jpg" alt="">
         </div>
         <div class="col-md-6 text-white">
           <h1 class=" mt-5">Howdy, we're Paul Fontes and Chase McLain</h1>
@@ -69,11 +69,6 @@
 </template>
 
 <style scoped lang="scss">
-img {
-  height: 650px;
-  border-radius: 10px;
-}
-
 .background-img {
   background-image: url(../assets/img/guillaume-coupy-Zdkn765eMZs-unsplash.png);
   background-position: center;
@@ -83,6 +78,11 @@ img {
 
 a {
   text-decoration: unset;
+}
+
+.img-us {
+  height: 600px;
+  border-radius: 10px;
 }
 
 .disclaimer {}

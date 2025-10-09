@@ -3,6 +3,7 @@ import { AppState } from '@/AppState.js';
 import Quill from '@/components/Quill.vue';
 import { accountService } from '@/services/AccountService.js';
 import { gamesService } from '@/services/GamesService.js';
+import { reviewsService } from '@/services/ReviewsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted, ref, watch } from 'vue';
@@ -17,12 +18,11 @@ const account = computed(() => AppState.account)
 const route = useRoute()
 
 const reviewData = ref({
-
+    gameId: '',
     story: 0,
     graphics: 0,
     gameplay: 0,
     replayAbility: 0,
-    gameId: '',
     body: '',
     totalScore: 0
 })
@@ -72,7 +72,8 @@ async function favoriteGame() {
 
 async function createReview() {
     try {
-        await 
+        reviewData.value.gameId = activeGame.value.id
+        await reviewsService.createReview(reviewData.value)
     }
     catch (error) {
         Pop.error('Failed to save review', error);
@@ -238,7 +239,7 @@ async function createReview() {
             </div>
             <div class="col-12">
                 <p v-for="requirements in activeGame.platforms" class="text-white">{{ requirements.requirements.minimum
-                    }}</p>
+                }}</p>
             </div>
         </section>
         <section class="row ">
@@ -246,7 +247,7 @@ async function createReview() {
                 <h3>Write A Review</h3>
             </div>
         </section>
-        <form class="row d-flex justify-content-evenly" action="">
+        <form @submit.prevent="createReview()" class="row d-flex justify-content-evenly" action="">
             <div class="col-md-2">
                 <label for="story">Story</label>
                 <span class="d-flex">
@@ -287,6 +288,11 @@ async function createReview() {
             </div>
             <div class="col-12">
                 <quill v-model="reviewData.body" />
+            </div>
+            <div class="col-12 text-end">
+                <button type="submit" class="btn btn-success mt-5">
+                    Submit
+                </button>
             </div>
         </form>
         <section class="row">
