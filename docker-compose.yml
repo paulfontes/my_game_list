@@ -1,7 +1,7 @@
 services:
   app_name: my_game_list                    # Name of the service
     container_name: my_game_list   # Name of the container
-    image: ghcr.io/gh-username/app_name:latest  # Use the latest image from GHCR
+    image: ghcr.io/paulfontes/my_game_list:latest  # Use the latest image from GHCR
     ports: 
       - "7045:8080"         # Map port 7045 on the host to port 8080 in the container
     env_file:
