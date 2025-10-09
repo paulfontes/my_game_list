@@ -1,5 +1,5 @@
 services:
-  app_name: my_game_list                    # Name of the service
+  my_game_list:                    # Name of the service
     container_name: my_game_list   # Name of the container
     image: ghcr.io/paulfontes/my_game_list:latest  # Use the latest image from GHCR
     ports: 
