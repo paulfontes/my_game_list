@@ -9,6 +9,6 @@ export class Account {
     this.favGameImg = data.favGameImg
     this.favGameName = data.favGameName
     this.bio = data.bio
-    this.favGameArtwork = data.favGameArtwork
+    this.favGameArt = data.favGameArt
   }
 }

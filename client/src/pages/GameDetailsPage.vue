@@ -1,10 +1,11 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import Quill from '@/components/Quill.vue';
 import { accountService } from '@/services/AccountService.js';
 import { gamesService } from '@/services/GamesService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 
@@ -14,6 +15,34 @@ const activeGame = computed(() => AppState.activeGame)
 const account = computed(() => AppState.account)
 
 const route = useRoute()
+
+const reviewData = ref({
+
+    story: 0,
+    graphics: 0,
+    gameplay: 0,
+    replayAbility: 0,
+    gameId: '',
+    body: '',
+    totalScore: 0
+})
+
+
+const accountData = ref({
+    name: '',
+    picture: '',
+    bio: '',
+    bannerImg: 'https://www.altavia.hu/wp-content/uploads/2020/11/Hero-Banner-Placeholder-Light-1024x480-1.png',
+    favGameImg: '',
+    favGameArt: '',
+    favGameName: '',
+
+})
+
+watch(account, () => {
+    accountData.value = { ...account.value }
+
+}, { immediate: true })
 
 onMounted(() =>
     getActiveGame()
@@ -30,7 +59,10 @@ async function getActiveGame() {
 }
 async function favoriteGame() {
     try {
-        await accountService.favoriteGame(activeGame.value)
+        accountData.value.favGameName = activeGame.value.title
+        accountData.value.favGameImg = activeGame.value.coverArt
+        accountData.value.favGameArt = activeGame.value.artwork
+        await accountService.updateAccount(accountData.value)
     }
     catch (error) {
         Pop.error(error);
@@ -48,9 +80,13 @@ async function favoriteGame() {
         </section>
 
         <section v-if="activeGame" class="row positioned-row w-100 justify-content-evenly">
-            <div class=" text-white fav-button">
-                <h1 @click="favoriteGame()"><i class="mdi mdi-star"></i></h1>
+            <div v-if="account" class="col-2 text-white fav-button">
+                <h1 class="text-yellow" v-if="account.favGameName == activeGame.title" @click="favoriteGame()"><i
+                        class="mdi mdi-star"></i></h1>
+                <h1 class="text-white" v-else @click="favoriteGame()"><i class="mdi mdi-star"></i></h1>
+
             </div>
+
             <div class="col-md-3 pill-buttons d-flex justify-content-end ">
                 <img class="cover-art" :src="activeGame.coverArt" alt="game cover art">
             </div>
@@ -195,13 +231,43 @@ async function favoriteGame() {
                 }}</p>
             </div>
         </section>
-        <section class="row">
+        <section class="row ">
             <div class="col-md-12">
                 <h3>Write A Review</h3>
-
             </div>
-
         </section>
+        <form class="row d-flex justify-content-evenly" action="">
+            <div class="col-md-2">
+                <label for="story">Story</label>
+                <input class="form-control" id="story" name="story" v-model="reviewData.story" type="number" min="0"
+                    max="5">
+            </div>
+            <div class="col-md-2">
+                <label for="gameplay">Gameplay</label>
+                <input class="form-control" id="gameplay" name="gameplay" v-model="reviewData.gameplay" type="number"
+                    min="0" max="5">
+            </div>
+            <div class="col-md-2">
+                <label for="graphics">Graphics</label>
+                <input class="form-control" id="graphics" name="graphics" v-model="reviewData.graphics" type="number"
+                    min="0" max="5">
+            </div>
+            <div class="col-md-2">
+                <label for="replay-ability">Replay-ability</label>
+                <input class="form-control" id="replay-ability" name="replay-ability" v-model="reviewData.replayAbility"
+                    type="number" min="0" max="5">/5
+            </div>
+            <div class="col-md-2">
+                <h5>
+                    Total Score
+                </h5>
+                <h5>0/5</h5>
+            </div>
+            <div class="">
+
+                <quill />
+            </div>
+        </form>
     </main>
 </template>
 
@@ -284,5 +350,9 @@ main {
 
 .fav-button:hover {
     color: yellow !important;
+}
+
+.form-control {
+    width: 50px;
 }
 </style>

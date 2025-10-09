@@ -8,6 +8,12 @@ import { registerGlobalComponents } from './utils/registerGlobalComponents.js'
 import './utils/registerGlobalSocketHandlers.js'
 import { router } from './router.js'
 
+
+
+
+
+
+
 const root = createApp(App)
 async function init() {
   await registerGlobalComponents(root)

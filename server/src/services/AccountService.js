@@ -42,7 +42,10 @@ function sanitizeBody(body) {
     name: body.name,
     picture: body.picture,
     bio: body.bio,
-    bannerImg: body.bannerImg
+    bannerImg: body.bannerImg,
+    favGameImg: body.favGameImg,
+    favGameName: body.favGameName,
+    favGameArt: body.favGameArt
   }
   return writable
 }

@@ -59,15 +59,17 @@ const account = computed(() => AppState.account)
                     <div class="col-12">
                         <img class="banner-img mt-5" :src="account.bannerImg" alt="banner pic">
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-5 text-center">
                         <h3 class="text-center mt-3">Fav Game</h3>
-                        <div class="fav-game-box">
-                            <img v-if="account.favGameImg" :src="account.favGameImg" alt="game img">
+                        <div class="fav-game-box d-flex justify-content-center align-items-center">
+                            <img class="fav-game-cover-art" v-if="account.favGameImg" :src="account.favGameImg"
+                                alt="game img">
                         </div>
                     </div>
                     <div class="col-md-7 mt-4">
-                        <div class="fav-game-artwork">
-                            <img v-if="account.favGameName" :src="account.favGameArtwork" alt="game art">
+                        <div class="fav-game-artwork d-flex justify-content-center align-items-center">
+                            <img class="fav-game-art" v-if="account.favGameName" :src="account.favGameArt"
+                                alt="game art">
                         </div>
                     </div>
                 </section>
@@ -118,17 +120,31 @@ const account = computed(() => AppState.account)
 
 .fav-game-box {
     background-color: rgba(255, 253, 253, 0.8);
-    height: 250px;
+    height: 190px;
+    width: 330px;
 }
 
 .fav-game-artwork {
     background-color: rgba(250, 249, 249, 0.8);
-    height: 300px;
+    height: 260px;
+    width: 470px;
     border-radius: 10px;
 }
 
 .friends-list-box {
     background-color: rgba(78, 78, 78, 0.8);
     border-radius: 20px;
+}
+
+.fav-game-cover-art {
+    object-fit: cover;
+    object-position: center;
+    height: 175px;
+}
+
+.fav-game-art {
+    object-fit: cover;
+    object-position: center;
+    height: 250px;
 }
 </style>
