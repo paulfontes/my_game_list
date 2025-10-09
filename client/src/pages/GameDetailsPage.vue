@@ -1,10 +1,12 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { accountService } from '@/services/AccountService.js';
 import { gamesService } from '@/services/GamesService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+
 
 
 
@@ -26,6 +28,15 @@ async function getActiveGame() {
         logger.log('Failed to Load Game!', error)
     }
 }
+async function favoriteGame() {
+    try {
+        await accountService.favoriteGame(activeGame.value)
+    }
+    catch (error) {
+        Pop.error(error);
+        logger.log('Failed to Favorite Game!', error)
+    }
+}
 
 </script>
 
@@ -37,7 +48,9 @@ async function getActiveGame() {
         </section>
 
         <section v-if="activeGame" class="row positioned-row w-100 justify-content-evenly">
-
+            <div class=" text-white fav-button">
+                <h1 @click="favoriteGame()"><i class="mdi mdi-star"></i></h1>
+            </div>
             <div class="col-md-3 pill-buttons d-flex justify-content-end ">
                 <img class="cover-art" :src="activeGame.coverArt" alt="game cover art">
             </div>
@@ -179,7 +192,7 @@ async function getActiveGame() {
             </div>
             <div class="col-12">
                 <p v-for="requirements in activeGame.platforms" class="text-white">{{ requirements.requirements.minimum
-                    }}</p>
+                }}</p>
             </div>
         </section>
         <section class="row">
@@ -260,5 +273,16 @@ main {
     object-position: center;
     aspect-ratio: 1/1;
     border-radius: 50%;
+}
+
+.fav-button {
+    position: absolute;
+    top: 0px;
+    left: 36px;
+    text-shadow: 2px 2px 5px black;
+}
+
+.fav-button:hover {
+    color: yellow !important;
 }
 </style>
