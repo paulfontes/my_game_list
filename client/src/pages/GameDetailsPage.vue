@@ -70,6 +70,16 @@ async function favoriteGame() {
     }
 }
 
+async function createReview() {
+    try {
+        await 
+    }
+    catch (error) {
+        Pop.error('Failed to save review', error);
+        logger.log('Failed to save review', error)
+    }
+}
+
 </script>
 
 
@@ -228,7 +238,7 @@ async function favoriteGame() {
             </div>
             <div class="col-12">
                 <p v-for="requirements in activeGame.platforms" class="text-white">{{ requirements.requirements.minimum
-                }}</p>
+                    }}</p>
             </div>
         </section>
         <section class="row ">
@@ -239,23 +249,35 @@ async function favoriteGame() {
         <form class="row d-flex justify-content-evenly" action="">
             <div class="col-md-2">
                 <label for="story">Story</label>
-                <input class="form-control" id="story" name="story" v-model="reviewData.story" type="number" min="0"
-                    max="5">
+                <span class="d-flex">
+                    <input class="form-control" id="story" name="story" v-model="reviewData.story" type="number" min="0"
+                        max="5">
+                    <h4 class="mb-0 mt-1 ps-1">/5</h4>
+                </span>
             </div>
             <div class="col-md-2">
                 <label for="gameplay">Gameplay</label>
-                <input class="form-control" id="gameplay" name="gameplay" v-model="reviewData.gameplay" type="number"
-                    min="0" max="5">
+                <span class="d-flex">
+                    <input class="form-control" id="gameplay" name="gameplay" v-model="reviewData.gameplay"
+                        type="number" min="0" max="5">
+                    <h4 class="mb-0 mt-1 ps-1">/5</h4>
+                </span>
             </div>
             <div class="col-md-2">
                 <label for="graphics">Graphics</label>
-                <input class="form-control" id="graphics" name="graphics" v-model="reviewData.graphics" type="number"
-                    min="0" max="5">
+                <span class="d-flex">
+                    <input class="form-control" id="graphics" name="graphics" v-model="reviewData.graphics"
+                        type="number" min="0" max="5">
+                    <h4 class="mb-0 mt-1 ps-1">/5</h4>
+                </span>
             </div>
             <div class="col-md-2">
                 <label for="replay-ability">Replay-ability</label>
-                <input class="form-control" id="replay-ability" name="replay-ability" v-model="reviewData.replayAbility"
-                    type="number" min="0" max="5">/5
+                <span class="d-flex">
+                    <input class="form-control" id="replay-ability" name="replay-ability"
+                        v-model="reviewData.replayAbility" type="number" min="0" max="5">
+                    <h4 class="mb-0 mt-1 ps-1">/5</h4>
+                </span>
             </div>
             <div class="col-md-2">
                 <h5>
@@ -263,11 +285,13 @@ async function favoriteGame() {
                 </h5>
                 <h5>0/5</h5>
             </div>
-            <div class="">
-
-                <quill />
+            <div class="col-12">
+                <quill v-model="reviewData.body" />
             </div>
         </form>
+        <section class="row">
+            salad
+        </section>
     </main>
 </template>
 
