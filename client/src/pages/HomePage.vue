@@ -40,6 +40,12 @@ async function getGames() {
 
 async function changePage(pageNumber, num) {
   try {
+    logger.log(pageNumber)
+    if (typeof pageNumber == 'string' && pageNumber.includes('http')) {
+      const newPage = new URL(pageNumber).searchParams;
+      const page = newPage.get("page")
+      pageNumber = page || 1
+    }
     await gamesService.changePage(pageNumber, num)
   }
   catch (error) {

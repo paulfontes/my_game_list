@@ -19,13 +19,7 @@ class GamesService {
         AppState.activeGame = new Game(response.data)
     }
     async changePage(pageNumber, num) {
-        logger.log(pageNumber)
-        if (pageNumber.toString() == 'https://api.rawg.io/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_1=&page_size=40&page_size=40') {
-            const response = await gameApi.get(`https://api.rawg.io/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_1=&page_size=40&page_size=40`)
-            this.gameHandler(response)
-            AppState.currentPage = AppState.currentPage + num
-        }
-        const response = await gameApi.get(`/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_size=40&page=${pageNumber}`)
+        const response = await gameApi.get(`/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page=${pageNumber}&page_size=40`)
         this.gameHandler(response)
         AppState.currentPage = AppState.currentPage + num
         if (AppState.currentPage > AppState.totalPages) {
@@ -40,7 +34,7 @@ class GamesService {
     async getGames() {
         AppState.games = []
         AppState.currentPage = 1
-        const response = await gameApi.get('/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_1&page_size=40')
+        const response = await gameApi.get('/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_size=40&page_1')
         this.gameHandler(response)
 
     }
