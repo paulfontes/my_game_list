@@ -9,7 +9,7 @@
         <div class="col-md-12 col-sm-12 col-lg-6">
           <img class="mt-5 img-us img-fluid" src="../assets/img/IMG_3319.jpg" alt="">
         </div>
-        <div class="col-md-6 text-white">
+        <div class="col-md-6 text-white text-mobile">
           <h1 class=" mt-5">Howdy, we're Paul Fontes and Chase McLain</h1>
           <h2 class="">Software Developers</h2>
           <p class="mt-5">My Game List is a website Developed in Vue. It was created as a practice portfolio piece to
@@ -74,6 +74,7 @@
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
+  min-height: 100vh;
 }
 
 a {
@@ -83,6 +84,12 @@ a {
 .img-us {
   height: 600px;
   border-radius: 10px;
+}
+
+@media (max-width: 991px) {
+  .text-mobile {
+    text-align: center;
+  }
 }
 
 .disclaimer {}

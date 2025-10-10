@@ -102,17 +102,17 @@ async function unFavoriteGame() {
         <section v-if="activeGame" :style="{ backgroundImage: `url(${activeGame.artwork})` }"
             class="row background-art ">
         </section>
-
         <section v-if="activeGame" class="row positioned-row w-100 justify-content-evenly">
-            <div v-if="account" class="col-2 text-white fav-button">
-                <h1 class="text-yellow" v-if="account.favGameName == activeGame.title" @click="unFavoriteGame()"><i
-                        class="mdi mdi-star"></i></h1>
-                <h1 class="text-white" v-else @click="favoriteGame()"><i class="mdi mdi-star"></i></h1>
-
-            </div>
-
             <div class="col-md-3 pill-buttons d-flex justify-content-end ">
-                <img class="cover-art" :src="activeGame.coverArt" alt="game cover art">
+                <div class="cover-art" :style="{ backgroundImage: `url(${activeGame.coverArt})` }">
+                    <div v-if="account" class="col-2 text-white">
+                        <h1 class="text-yellow " v-if="account.favGameName == activeGame.title"
+                            @click="unFavoriteGame()"><i class="mdi mdi-star"></i></h1>
+                        <h1 class="text-white fav-button" v-else @click="favoriteGame()"><i class="mdi mdi-star"></i>
+                        </h1>
+
+                    </div>
+                </div>
             </div>
             <div class="col-md-3 text-white d-flex pill-buttons justify-content-end">
                 <span class="d-flex justify-content-between text-box mb-2">
@@ -324,10 +324,11 @@ async function unFavoriteGame() {
 }
 
 .cover-art {
+    position: relative;
     width: 350px;
     height: 200px;
-    object-fit: cover;
-    object-position: center;
+    background-size: cover;
+    background-position: center;
     aspect-ratio: 1/1;
     border: solid 3px black;
     box-shadow: -5px -5px 10px black;
@@ -386,8 +387,8 @@ main {
 
 .fav-button {
     position: absolute;
-    top: 0px;
-    left: 36px;
+    top: -27px;
+    left: -23px;
     text-shadow: 2px 2px 5px black;
 }
 

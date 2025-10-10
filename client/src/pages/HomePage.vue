@@ -94,25 +94,35 @@ async function changePage(pageNumber, num) {
         </RouterLink>
       </div>
     </section>
-    <section class="row background-color page-button-disabled">
+    <section class="row background-color page-button-disabled mt-3">
       <div class="col-12 text-center text-white d-flex justify-content-center align-items-center top-page-buttons">
-        <button :disabled="currentPage == 1" class="btn page-button-disabled">
-          <img @click="changePage(1, -totalPages)" type="button" class="page-button-left img-fluid"
-            src="../assets/img/page button.png" alt="first page button">
-        </button>
-        <button :disabled="previousPage == null" class="btn page-button-disabled">
-          <img @click="changePage(previousPage, -1)" type="button" class="page-button-left img-fluid"
-            src="../assets/img/page button.png" alt="previous page button">
-        </button>
-        <p class="mt-2">Page {{ currentPage }} of {{ totalPages }} </p>
-        <button :disabled="currentPage == totalPages" class="btn page-button-disabled">
-          <img @click="changePage(nextPage, 1)" type="button" class="page-button-right img-fluid"
-            src="../assets/img/page button.png" alt="next page button">
-        </button>
-        <button :disabled="currentPage == totalPages" class="btn page-button-disabled">
-          <img @click="changePage(totalPages, totalPages - 1)" type="button" class="page-button-right img-fluid"
-            src="../assets/img/page button.png" alt="last page button">
-        </button>
+        <span class="mobile-view-page-buttons gap-5">
+          <button :disabled="currentPage == 1" class="btn page-button-disabled">
+            <img @click="changePage(1, -totalPages)" type="button" class="page-button-left img-fluid"
+              src="../assets/img/page button.png" alt="first page button">
+          </button>
+          <button :disabled="previousPage == null" class="btn page-button-disabled">
+            <img @click="changePage(previousPage, -1)" type="button" class="page-button-left img-fluid"
+              src="../assets/img/page button.png" alt="previous page button">
+          </button>
+          <p class="mt-2">Page {{ currentPage }} of {{ totalPages }} </p>
+          <button :disabled="currentPage == totalPages" class="btn page-button-disabled">
+            <img @click="changePage(nextPage, 1)" type="button" class="page-button-right img-fluid"
+              src="../assets/img/page button.png" alt="next page button">
+          </button>
+          <button :disabled="currentPage == totalPages" class="btn page-button-disabled">
+            <img @click="changePage(totalPages, totalPages - 1)" type="button" class="page-button-right img-fluid"
+              src="../assets/img/page button.png" alt="last page button">
+          </button>
+        </span>
+      </div>
+    </section>
+    <section class="row mt-5 justify-content-center">
+      <div class="col-md-5 text-center">
+        <small class="mb-5">Disclaimer: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta maxime tenetur
+          perspiciatis
+          consectetur quos quisquam minima dolore ea necessitatibus doloribus repellendus enim ducimus placeat,
+          assumenda laborum tempore quo. Ex, facere.</small>
       </div>
     </section>
   </main>
