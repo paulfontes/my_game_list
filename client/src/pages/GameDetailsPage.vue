@@ -81,6 +81,19 @@ async function createReview() {
     }
 }
 
+async function unFavoriteGame() {
+    try {
+        accountData.value.favGameName = ''
+        accountData.value.favGameImg = ''
+        accountData.value.favGameArt = ''
+        await accountService.updateAccount(accountData.value)
+    }
+    catch (error) {
+        Pop.error(error);
+        logger.log('Failed to Favorite Game!', error)
+    }
+}
+
 </script>
 
 
@@ -92,7 +105,7 @@ async function createReview() {
 
         <section v-if="activeGame" class="row positioned-row w-100 justify-content-evenly">
             <div v-if="account" class="col-2 text-white fav-button">
-                <h1 class="text-yellow" v-if="account.favGameName == activeGame.title" @click="favoriteGame()"><i
+                <h1 class="text-yellow" v-if="account.favGameName == activeGame.title" @click="unFavoriteGame()"><i
                         class="mdi mdi-star"></i></h1>
                 <h1 class="text-white" v-else @click="favoriteGame()"><i class="mdi mdi-star"></i></h1>
 

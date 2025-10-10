@@ -19,15 +19,28 @@ class GamesService {
         AppState.activeGame = new Game(response.data)
     }
     async changePage(pageNumber, num) {
-        const response = await gameApi.get(`${pageNumber}`)
-        this.gameHandler(response)
-        if (num >= AppState.totalPages) {
-            AppState.currentPage = AppState.totalPages
+        logger.log(pageNumber)
+        if (pageNumber.toString() == 'https://api.rawg.io/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_1=&page_size=40&page_size=40') {
+            const response = await gameApi.get(`https://api.rawg.io/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_1=&page_size=40&page_size=40`)
+            this.gameHandler(response)
+            AppState.currentPage = AppState.currentPage + num
         }
+        const response = await gameApi.get(`/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_size=40&page=${pageNumber}`)
+        this.gameHandler(response)
         AppState.currentPage = AppState.currentPage + num
+        if (AppState.currentPage > AppState.totalPages) {
+            AppState.currentPage = AppState.totalPages
+            return
+        }
+        if (AppState.currentPage < 1) {
+            AppState.currentPage = 1
+            return
+        }
     }
     async getGames() {
-        const response = await gameApi.get('/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_size=40&page_1')
+        AppState.games = []
+        AppState.currentPage = 1
+        const response = await gameApi.get('/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_1&page_size=40')
         this.gameHandler(response)
 
     }
@@ -39,7 +52,7 @@ class GamesService {
         AppState.previousPage = response.data.previous
         const gameNumber = response.data.count
         AppState.totalPages = Math.ceil(gameNumber / 40)
-        logger.log(AppState.nextPage, AppState.previousPage);
+        // logger.log(AppState.nextPage, AppState.previousPage);
     }
 
 }

@@ -4,7 +4,7 @@ import GameCard from '@/components/GameCard.vue';
 import { gamesService } from '@/services/GamesService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 
 
@@ -18,6 +18,14 @@ const account = computed(() => AppState.account)
 onMounted(() =>
   getGames()
 )
+
+const platforms = ref({
+  pc: '',
+  linux: '',
+  xbox360: '',
+  ps3: '',
+
+})
 
 async function getGames() {
   try {
@@ -54,7 +62,7 @@ async function changePage(pageNumber, num) {
       <div class="col-12 text-center text-white d-flex justify-content-center align-items-center top-page-buttons ">
         <span class="mobile-view-page-buttons gap-5">
           <button :disabled="currentPage == 1" class="btn page-button-disabled">
-            <img @click="changePage(-10000)" type="button" class="page-button-left img-fluid"
+            <img @click="changePage(1, -totalPages)" type="button" class="page-button-left img-fluid"
               src="../assets/img/page button.png" alt="first page button">
           </button>
           <button :disabled="previousPage == null" class="btn page-button-disabled">
@@ -67,7 +75,7 @@ async function changePage(pageNumber, num) {
               src="../assets/img/page button.png" alt="next page button">
           </button>
           <button :disabled="currentPage == totalPages" class="btn page-button-disabled">
-            <img @click="changePage(nextPage, 10000)" type="button" class="page-button-right img-fluid"
+            <img @click="changePage(totalPages, totalPages - 1)" type="button" class="page-button-right img-fluid"
               src="../assets/img/page button.png" alt="last page button">
           </button>
         </span>
@@ -83,7 +91,7 @@ async function changePage(pageNumber, num) {
     <section class="row background-color page-button-disabled">
       <div class="col-12 text-center text-white d-flex justify-content-center align-items-center top-page-buttons">
         <button :disabled="currentPage == 1" class="btn page-button-disabled">
-          <img @click="changePage(-10000)" type="button" class="page-button-left img-fluid"
+          <img @click="changePage(1, -totalPages)" type="button" class="page-button-left img-fluid"
             src="../assets/img/page button.png" alt="first page button">
         </button>
         <button :disabled="previousPage == null" class="btn page-button-disabled">
@@ -96,7 +104,7 @@ async function changePage(pageNumber, num) {
             src="../assets/img/page button.png" alt="next page button">
         </button>
         <button :disabled="currentPage == totalPages" class="btn page-button-disabled">
-          <img @click="changePage(nextPage, 10000)" type="button" class="page-button-right img-fluid"
+          <img @click="changePage(totalPages, totalPages - 1)" type="button" class="page-button-right img-fluid"
             src="../assets/img/page button.png" alt="last page button">
         </button>
       </div>

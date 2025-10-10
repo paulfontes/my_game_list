@@ -9,9 +9,9 @@ export const AccountSchema = new Schema(
     picture: { type: String },
     bio: { type: String, minLength: 0, maxLength: 500 },
     bannerImg: { type: String, minLength: 0, maxLength: 500 },
-    favGameName: { type: String, minLength: 1, maxLength: 300 },
-    favGameImg: { type: String, minLength: 1, maxLength: 500 },
-    favGameArt: { type: String, minLength: 1, maxLength: 500 },
+    favGameName: { type: String, minLength: 0, maxLength: 300 },
+    favGameImg: { type: String, minLength: 0, maxLength: 500 },
+    favGameArt: { type: String, minLength: 0, maxLength: 500 },
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )
