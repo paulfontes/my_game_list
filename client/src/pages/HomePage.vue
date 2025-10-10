@@ -88,10 +88,13 @@ async function changePage(pageNumber, num) {
       </div>
     </section>
     <section class="row game-card">
-      <div v-for="game in games" :key="game.id" class="col-xl-3 col-lg-4 g-5 game-card-col">
-        <RouterLink :to="{ name: 'GameDetails', params: { gameId: game.id } }">
-          <GameCard :gameProp="game" />
-        </RouterLink>
+      <div class="col-12 masonry-container">
+
+        <div v-for="game in games" :key="game.id" class="mb-3">
+          <RouterLink :to="{ name: 'GameDetails', params: { gameId: game.id } }">
+            <GameCard :gameProp="game" />
+          </RouterLink>
+        </div>
       </div>
     </section>
     <section class="row background-color page-button-disabled mt-3">
@@ -130,7 +133,13 @@ async function changePage(pageNumber, num) {
 
 
 <style scoped lang="scss">
-.game-card-col {}
+.masonry-container {
+  columns: 325px;
+
+  >div {
+    break-inside: avoid;
+  }
+}
 
 .page-button-disabled {
   border: none;

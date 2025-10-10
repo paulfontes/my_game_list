@@ -105,7 +105,7 @@ async function unFavoriteGame() {
         <section v-if="activeGame" class="row positioned-row w-100 justify-content-evenly">
             <div class="col-md-3 pill-buttons d-flex justify-content-end ">
                 <div class="cover-art" :style="{ backgroundImage: `url(${activeGame.coverArt})` }">
-                    <div v-if="account" class="col-2 text-white">
+                    <div v-if="account" class="col-2 text-white fav-button-pos">
                         <h1 class="text-yellow " v-if="account.favGameName == activeGame.title"
                             @click="unFavoriteGame()"><i class="mdi mdi-star"></i></h1>
                         <h1 class="text-white fav-button" v-else @click="favoriteGame()"><i class="mdi mdi-star"></i>
@@ -146,27 +146,29 @@ async function unFavoriteGame() {
                         <h4 class="mb-4" v-else>Rate This Game!</h4>
                         <h4 class="mt-4">Release Date: {{ activeGame.releaseDate }}</h4>
                     </span>
-                    <img v-if="activeGame.ageRating.name == 'Mature'"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/ESRB_2013_Mature.svg/120px-ESRB_2013_Mature.svg.png"
-                        alt="Mature" class="pb-2">
-                    <img v-if="activeGame.ageRating.name == 'Everyone'"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/ESRB_2013_Everyone.svg/120px-ESRB_2013_Everyone.svg.png"
-                        alt="Everyone">
-                    <img v-if="activeGame.ageRating.name == 'Teen'"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/ESRB_2013_Teen.svg/120px-ESRB_2013_Teen.svg.png"
-                        alt="Teen">
-                    <img v-if="activeGame.ageRating.name == 'Everyone 10+'"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/ESRB_2013_Everyone_10%2B.svg/120px-ESRB_2013_Everyone_10%2B.svg.png"
-                        alt=" E 10+" class="mb-2">
-                    <img v-if="activeGame.ageRating.name == 'Adult Only'"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/ESRB_2013_Adults_Only_18%2B.svg/120px-ESRB_2013_Adults_Only_18%2B.svg.png"
-                        alt="Adult">
-                    <img v-if="activeGame.ageRating.name == null"
+                    <img v-if="activeGame.ageRating == null"
                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/ESRB_2013_Rating_Pending.svg/120px-ESRB_2013_Rating_Pending.svg.png"
                         alt="Rating Pending">
-                    <img v-if="activeGame.ageRating.name == 'Rating Pending'"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/ESRB_2013_Rating_Pending.svg/120px-ESRB_2013_Rating_Pending.svg.png"
-                        alt="Rating Pending">
+                    <div v-else>
+                        <img v-if="activeGame.ageRating.name == 'Mature'"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/ESRB_2013_Mature.svg/120px-ESRB_2013_Mature.svg.png"
+                            alt="Mature" class="pb-2">
+                        <img v-if="activeGame.ageRating.name == 'Everyone'"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/ESRB_2013_Everyone.svg/120px-ESRB_2013_Everyone.svg.png"
+                            alt="Everyone">
+                        <img v-if="activeGame.ageRating.name == 'Teen'"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/ESRB_2013_Teen.svg/120px-ESRB_2013_Teen.svg.png"
+                            alt="Teen">
+                        <img v-if="activeGame.ageRating.name == 'Everyone 10+'"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/ESRB_2013_Everyone_10%2B.svg/120px-ESRB_2013_Everyone_10%2B.svg.png"
+                            alt=" E 10+" class="mb-2">
+                        <img v-if="activeGame.ageRating.name == 'Adult Only'"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/ESRB_2013_Adults_Only_18%2B.svg/120px-ESRB_2013_Adults_Only_18%2B.svg.png"
+                            alt="Adult">
+                        <img v-if="activeGame.ageRating.name == 'Rating Pending'"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/ESRB_2013_Rating_Pending.svg/120px-ESRB_2013_Rating_Pending.svg.png"
+                            alt="Rating Pending">
+                    </div>
                 </span>
             </div>
         </section>
@@ -180,7 +182,7 @@ async function unFavoriteGame() {
             <span class="text-end mt-5 col-5 box-width ">
                 <h5>{{ activeGame.releaseDate }}</h5>
                 <h5>{{ activeGame.siteRating }}</h5>
-                <h5>{{ activeGame.ageRating.name }}</h5>
+                <h5 v-if="activeGame.ageRating != null">{{ activeGame.ageRating.name }}</h5>
             </span>
         </section>
     </article>
@@ -300,7 +302,9 @@ async function unFavoriteGame() {
                 <h5>0/5</h5>
             </div>
             <div class="col-12">
-                <quill v-model="reviewData.body" />
+                <!-- <quill v-model="reviewData.body" /> -->
+                <textarea class="form-control w-100 mt-4" v-model="reviewData.body" name="review-body"
+                    id="review-body"></textarea>
             </div>
             <div class="col-12 text-end">
                 <button type="submit" class="btn btn-success mt-5">
@@ -385,7 +389,7 @@ main {
     border-radius: 50%;
 }
 
-.fav-button {
+.fav-button-pos {
     position: absolute;
     top: -27px;
     left: -23px;
@@ -393,10 +397,14 @@ main {
 }
 
 .fav-button:hover {
-    color: yellow !important;
+    color: #ffc107 !important;
 }
 
 .form-control {
     width: 50px;
+}
+
+textarea {
+    height: 200px;
 }
 </style>
