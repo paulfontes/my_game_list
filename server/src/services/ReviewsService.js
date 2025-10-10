@@ -92,7 +92,7 @@ class ReviewsService {
         const deleteReview = await dbContext.Reviews.deleteOne({ _id: deletedReview._id })
     }
     async getReviewsByGameId(gameData) {
-        const reviews = await dbContext.Reviews.find({ gameId: gameData.gameId }).populate('creator', 'name picture')
+        const reviews = await dbContext.Reviews.find({ gameId: gameData }).populate('creator', 'name picture')
         return reviews
     }
 

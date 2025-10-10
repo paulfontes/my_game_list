@@ -14,6 +14,7 @@ import { useRoute } from 'vue-router';
 
 const activeGame = computed(() => AppState.activeGame)
 const account = computed(() => AppState.account)
+const reviews = computed(() => AppState.reviews)
 
 const route = useRoute()
 
@@ -24,8 +25,10 @@ const reviewData = ref({
     gameplay: 0,
     replayAbility: 0,
     body: '',
-    totalScore: 0
+
 })
+
+let totalScore = reviewData.value.gameplay + reviewData.value.graphics + reviewData.value.story + reviewData.value.replayAbility / 4
 
 
 const accountData = ref({
@@ -44,9 +47,20 @@ watch(account, () => {
 
 }, { immediate: true })
 
-onMounted(() =>
+onMounted(() => {
     getActiveGame()
-)
+    getReviews()
+})
+
+async function getReviews() {
+    try {
+        await reviewsService.getReviews(route.params.gameId)
+    }
+    catch (error) {
+        Pop.error('failed to load reviews', error);
+        logger.log('failed to load reviews', error)
+    }
+}
 
 async function getActiveGame() {
     try {
@@ -299,7 +313,7 @@ async function unFavoriteGame() {
                 <h5>
                     Total Score
                 </h5>
-                <h5>0/5</h5>
+                <h5>{{ totalScore }}/5</h5>
             </div>
             <div class="col-12">
                 <!-- <quill v-model="reviewData.body" /> -->
@@ -313,7 +327,44 @@ async function unFavoriteGame() {
             </div>
         </form>
         <section class="row">
-            salad
+            <div class="col-12">
+                <h3>
+                    Reviews
+                </h3>
+                <div v-for="review in reviews" class="col-12">
+                    <div class="bg-white text-black review-box mb-4">
+                        <span class="d-flex">
+                            <img class="review-image mt-3 ms-3" :src="review.creator.picture" alt="profile image">
+                            <H3 class="mt-3">{{ review.creator.name }}'s Review:</H3>
+                        </span>
+                        <span class="d-flex justify-content-evenly">
+                            <span class="text-center">
+                                <h5>Story</h5>
+                                <h5>{{ review.story }}/5</h5>
+                            </span>
+                            <span class="text-center">
+                                <h5>Gameplay</h5>
+                                <h5>{{ review.gameplay }}/5</h5>
+                            </span>
+                            <span class="text-center">
+                                <h5>Graphics</h5>
+                                <h5>{{ review.graphics }}/5</h5>
+                            </span>
+                            <span class="text-center">
+                                <h5>Replay-ability</h5>
+                                <h5>{{ review.replayAbility }}/5</h5>
+                            </span>
+                            <span class="text-center">
+                                <h5>Total Score</h5>
+                                <h5>{{ (review.story + review.gameplay + review.graphics + review.replayAbility) / 4
+                                    }}/5
+                                </h5>
+                            </span>
+                        </span>
+                        <p class="text-black ms-5 p-3">{{ review.body }}</p>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 </template>
@@ -406,5 +457,17 @@ main {
 
 textarea {
     height: 200px;
+}
+
+.review-image {
+    aspect-ratio: 1/1;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.review-box {
+    border-radius: var(--bs-border-radius);
 }
 </style>

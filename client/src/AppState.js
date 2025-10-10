@@ -15,6 +15,8 @@ export const AppState = reactive({
   totalPages: 1,
   currentPage: 1,
   /** @type {import('./models/Game.js').Game} user info from the database*/
-  activeGame: null
+  activeGame: null,
+  /** @type {import('./models/Review.js').Review[]} user info from the database*/
+  reviews: []
 })
 

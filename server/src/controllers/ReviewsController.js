@@ -7,7 +7,7 @@ export class ReviewsController extends BaseController {
     constructor() {
         super('api/reviews')
         this.router
-            .get('', this.getReviewsByGameId)
+            .get('/:gameId', this.getReviewsByGameId)
             .get('/:profileId', this.getReviewsByProfileId)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .put('', this.changeLikedStatus)
@@ -17,7 +17,7 @@ export class ReviewsController extends BaseController {
 
     async getReviewsByGameId(request, response, next) {
         try {
-            const gameData = request.body
+            const gameData = request.params.gameId
             const reviews = await reviewsService.getReviewsByGameId(gameData)
             response.send(reviews)
         }
