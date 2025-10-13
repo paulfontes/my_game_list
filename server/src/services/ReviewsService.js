@@ -84,8 +84,8 @@ class ReviewsService {
         status.likes.splice(index, 1)
         status.save()
     }
-    async deleteReview(reviewData, userInfo) {
-        const deletedReview = await dbContext.Reviews.findOne({ _id: reviewData._id })
+    async deleteReview(reviewId, userInfo) {
+        const deletedReview = await dbContext.Reviews.findById({ reviewId })
         if (deletedReview.creatorId != userInfo) {
             throw new Forbidden('suffer for eternity')
         }

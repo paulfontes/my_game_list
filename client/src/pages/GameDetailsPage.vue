@@ -108,6 +108,15 @@ async function unFavoriteGame() {
     }
 }
 
+async function deleteReview(reviewId) {
+    try {
+        await reviewsService.deleteReview(reviewId)
+    }
+    catch (error) {
+        Pop.error(error);
+    }
+}
+
 </script>
 
 
@@ -357,11 +366,16 @@ async function unFavoriteGame() {
                             <span class="text-center">
                                 <h5>Total Score</h5>
                                 <h5>{{ (review.story + review.gameplay + review.graphics + review.replayAbility) / 4
-                                    }}/5
+                                }}/5
                                 </h5>
                             </span>
                         </span>
                         <p class="text-black ms-5 p-3">{{ review.body }}</p>
+                        <div class="text-end">
+                            <button @click="deleteReview(review.id)" class="btn btn-outline-danger me-3 mb-3"><i
+                                    class="mdi mdi-trash-can"></i>
+                                DELETE</button>
+                        </div>
                     </div>
                 </div>
             </div>

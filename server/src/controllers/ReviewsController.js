@@ -12,7 +12,7 @@ export class ReviewsController extends BaseController {
             .use(Auth0Provider.getAuthorizedUserInfo)
             .put('', this.changeLikedStatus)
             .post('', this.createReview)
-            .delete('', this.deleteReview)
+            .delete('/:reviewId', this.deleteReview)
     }
 
     async getReviewsByGameId(request, response, next) {
@@ -64,9 +64,9 @@ export class ReviewsController extends BaseController {
 
     async deleteReview(request, response, next) {
         try {
-            const userInfo = request.userInfo.id
-            const reviewData = request.body
-            const deletedReview = await reviewsService.deleteReview(reviewData, userInfo)
+            const userInfo = request.userInfo
+            const reviewId = request.params.reviewId
+            const deletedReview = await reviewsService.deleteReview(reviewId, userInfo)
             response.send('review has perished')
         }
         catch (error) {

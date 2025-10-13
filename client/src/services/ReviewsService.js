@@ -19,6 +19,12 @@ class ReviewsService {
         logger.log(response)
     }
 
+    async deleteReview(reviewId) {
+        logger.log(reviewId)
+        const response = await api.delete(`api/reviews/${reviewId}`)
+        const index = AppState.reviews.findIndex((r) => r.id == reviewId)
+        AppState.reviews.splice(index, 1)
+    }
 }
 
 

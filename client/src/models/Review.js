@@ -3,6 +3,7 @@
 
 export class Review {
     constructor(data) {
+        this.id = data.id
         this.gameId = data.gameId
         this.body = data.body
         this.story = data.story
