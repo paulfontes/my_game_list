@@ -3,6 +3,8 @@ import { computed, ref, watch } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
 import { AppState } from '@/AppState.js';
+import { Pop } from '@/utils/Pop.js';
+import { gamesService } from '@/services/GamesService.js';
 
 const theme = ref(loadState('theme') || 'light')
 const account = computed(() => AppState.account)
@@ -16,6 +18,19 @@ watch(theme, () => {
   document.documentElement.setAttribute('data-bs-theme', theme.value)
   saveState('theme', theme.value)
 }, { immediate: true })
+
+const searchData = ref({
+  search: ''
+})
+
+async function searchGame() {
+  try {
+    await gamesService.searchGame(searchData.value.search)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
 
 </script>
 
@@ -64,8 +79,9 @@ watch(theme, () => {
           <!-- LOGIN COMPONENT HERE -->
         </div>
         <div class="col-md-4 pt-3 ">
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+          <form @submit.prevent="searchGame()" class="d-flex" role="search">
+            <input v-model="searchData.search" class="form-control me-2" type="search" placeholder="Search"
+              aria-label="Search" />
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         </div>

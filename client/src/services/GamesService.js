@@ -10,9 +10,9 @@ const gameApi = axios.create({
     timeout: 5000
 })
 
-
-
 class GamesService {
+
+
     async getActiveGame(gameId) {
         AppState.activeGame = null
         const response = await gameApi.get(`/api/games/${gameId}?key=b0d5907476a4461cadee527e4b2f0bdc`)
@@ -37,6 +37,11 @@ class GamesService {
         const response = await gameApi.get('/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_size=40&page_1')
         this.gameHandler(response)
 
+    }
+    async searchGame(searchData) {
+        AppState.games = []
+        const response = await gameApi.get(`/api/games?key=b0d5907476a4461cadee527e4b2f0bdc&page_size=40&search=${searchData}`)
+        this.gameHandler(response)
     }
 
     async gameHandler(response) {
