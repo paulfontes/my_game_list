@@ -179,7 +179,8 @@ async function disLike(reviewId) {
                 </div>
             </div>
             <div class="col-md-3 text-white d-flex pill-buttons justify-content-end">
-                <span class="d-flex justify-content-between text-box mb-2">
+                <span type="button" onclick="document.getElementById('reviewSection').scrollIntoView()"
+                    class="d-flex justify-content-between text-box mb-2">
                     <h5 class="m-0">Write A Review </h5>
                     <h5 class="m-0"><i class="mdi mdi-pen"></i></h5>
                 </span>
@@ -318,11 +319,11 @@ async function disLike(reviewId) {
             </div>
             <div class="col-12">
                 <p v-for="requirements in activeGame.platforms" class="text-white">{{ requirements.requirements.minimum
-                    }}</p>
+                }}</p>
             </div>
         </section>
         <section class="row ">
-            <div class="col-md-12">
+            <div id="reviewSection" class="col-md-12">
                 <h3>Write A Review</h3>
             </div>
         </section>
@@ -407,7 +408,7 @@ async function disLike(reviewId) {
                             <span class="text-center">
                                 <h5>Total Score</h5>
                                 <h5>{{ (review.story + review.gameplay + review.graphics + review.replayAbility) / 4
-                                    }}/5
+                                }}/5
                                 </h5>
                             </span>
                         </span>

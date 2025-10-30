@@ -111,6 +111,7 @@ const account = computed(() => AppState.account)
     height: 200px;
     width: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 .profile-box {
