@@ -105,7 +105,7 @@ class ReviewsService {
     async createReview(reviewData) {
         const newReview = await dbContext.Reviews.create(reviewData)
         newReview.populate('creator', 'name picture')
-        return newReview
+        return newReview.populate('creator', 'name picture')
     }
 
 }

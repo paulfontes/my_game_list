@@ -27,7 +27,8 @@ class ReviewsService {
     }
     async createReview(reviewData) {
         const response = await api.post('api/reviews', reviewData)
-        logger.log(response)
+        const review = new Review(response.data)
+        AppState.reviews.unshift(review)
     }
 
     async deleteReview(reviewId) {
