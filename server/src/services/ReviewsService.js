@@ -86,8 +86,8 @@ class ReviewsService {
         return status.populate('creator', 'name picture')
     }
     async deleteReview(reviewId, userInfo) {
-        const deletedReview = await dbContext.Reviews.findById({ reviewId })
-        if (deletedReview.creatorId != userInfo) {
+        const deletedReview = await dbContext.Reviews.findById({ _id: reviewId })
+        if (deletedReview.creatorId != userInfo.id) {
             throw new Forbidden('suffer for eternity')
         }
         const deleteReview = await dbContext.Reviews.deleteOne({ _id: deletedReview._id })

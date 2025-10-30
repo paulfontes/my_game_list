@@ -80,9 +80,9 @@ async function searchGame() {
         </div>
         <div class="col-md-4 pt-3 ">
           <form @submit.prevent="searchGame()" class="d-flex" role="search">
-            <input v-model="searchData.search" class="form-control me-2" type="search" placeholder="Search"
-              aria-label="Search" />
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <input v-model="searchData.search" class="form-control border border-dark me-2" type="search"
+              placeholder="Search" aria-label="Search" />
+            <button class="btn btn-outline-dark fw-bold" type="submit">Search</button>
           </form>
         </div>
 
