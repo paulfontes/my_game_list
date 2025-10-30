@@ -7,6 +7,14 @@ import { Review } from "@/models/Review.js"
 
 
 class ReviewsService {
+
+
+    async like(likeData) {
+        const response = await api.put(`api/reviews`, likeData)
+        logger.log(response)
+    }
+
+
     async getReviews(gameId) {
         AppState.reviews = []
         const response = await api.get(`api/reviews/${gameId}`)

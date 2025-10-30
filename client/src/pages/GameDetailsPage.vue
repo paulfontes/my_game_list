@@ -117,6 +117,36 @@ async function deleteReview(reviewId) {
     }
 }
 
+
+const likeData = ref({
+    _id: '',
+    liked: false
+})
+
+
+async function like(reviewId) {
+    try {
+        likeData.value._id = reviewId
+        likeData.value.liked = true
+        await reviewsService.like(likeData.value)
+    }
+    catch (error) {
+        Pop.error(error);
+    }
+}
+
+
+async function disLike(reviewId) {
+    try {
+        likeData.value._id = reviewId
+        likeData.value.liked = false
+        await reviewsService.like(likeData.value)
+    }
+    catch (error) {
+        Pop.error(error);
+    }
+}
+
 </script>
 
 
@@ -277,7 +307,7 @@ async function deleteReview(reviewId) {
             </div>
             <div class="col-12">
                 <p v-for="requirements in activeGame.platforms" class="text-white">{{ requirements.requirements.minimum
-                }}</p>
+                    }}</p>
             </div>
         </section>
         <section class="row ">
@@ -366,14 +396,22 @@ async function deleteReview(reviewId) {
                             <span class="text-center">
                                 <h5>Total Score</h5>
                                 <h5>{{ (review.story + review.gameplay + review.graphics + review.replayAbility) / 4
-                                }}/5
+                                    }}/5
                                 </h5>
                             </span>
                         </span>
                         <p class="text-black ms-5 p-3">{{ review.body }}</p>
-                        <div class="text-end">
-                            <button @click="deleteReview(review.id)" class="btn btn-outline-danger me-3 mb-3"><i
-                                    class="mdi mdi-trash-can"></i>
+                        <div v-if="account" class="d-flex justify-content-between">
+                            <span>
+                                <button @click="like(review.id)" class="btn">
+                                    <i class="mdi mdi-thumb-up"></i> {{ review.likes.length }}
+                                </button>
+                                <button @click="disLike(review.id)" class="btn">
+                                    <i class="mdi mdi-thumb-down"></i> {{ review.dislikes.length }}
+                                </button>
+                            </span>
+                            <button v-if="account.id == review.creatorId" @click="deleteReview(review.id)"
+                                class="btn btn-outline-danger me-3 mb-3"><i class="mdi mdi-trash-can"></i>
                                 DELETE</button>
                         </div>
                     </div>
