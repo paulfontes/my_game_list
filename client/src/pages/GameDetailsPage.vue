@@ -307,7 +307,7 @@ async function disLike(reviewId) {
             </div>
             <div class="col-12">
                 <p v-for="requirements in activeGame.platforms" class="text-white">{{ requirements.requirements.minimum
-                    }}</p>
+                }}</p>
             </div>
         </section>
         <section class="row ">
@@ -396,7 +396,7 @@ async function disLike(reviewId) {
                             <span class="text-center">
                                 <h5>Total Score</h5>
                                 <h5>{{ (review.story + review.gameplay + review.graphics + review.replayAbility) / 4
-                                    }}/5
+                                }}/5
                                 </h5>
                             </span>
                         </span>

@@ -56,15 +56,15 @@ class ReviewsService {
                     const index = status.likes.findIndex((l) => l._id == userInfo._id)
                     status.likes.splice(index, 1)
                     status.save()
-                    return status
+                    return status.populate('creator', 'name picture')
                 }
                 status.save()
-                return status
+                return status.populate('creator', 'name picture')
             }
-            const index = status.likes.findIndex((l) => l._id == userInfo._id)
-            status.likes.splice(index, 1)
+            const index = status.dislikes.findIndex((l) => l._id == userInfo._id)
+            status.dislikes.splice(index, 1)
             status.save()
-            return status
+            return status.populate('creator', 'name picture')
         }
         const status = await dbContext.Reviews.findOne({ _id: reviewLike._id })
         const statusArray = status.likes.includes(reviewLike.creatorId)
@@ -75,14 +75,15 @@ class ReviewsService {
                 const index = status.dislikes.findIndex((l) => l._id == userInfo._id)
                 status.dislikes.splice(index, 1)
                 status.save()
-                return status
+                return status.populate('creator', 'name picture')
             }
             status.save()
-            return status
+            return status.populate('creator', 'name picture')
         }
         const index = status.likes.findIndex((l) => l._id == userInfo._id)
         status.likes.splice(index, 1)
         status.save()
+        return status.populate('creator', 'name picture')
     }
     async deleteReview(reviewId, userInfo) {
         const deletedReview = await dbContext.Reviews.findById({ reviewId })

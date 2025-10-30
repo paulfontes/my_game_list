@@ -11,7 +11,10 @@ class ReviewsService {
 
     async like(likeData) {
         const response = await api.put(`api/reviews`, likeData)
-        logger.log(response)
+        const newReview = new Review(response.data)
+        logger.log(newReview)
+        const num = AppState.reviews.findIndex((review) => review.id == likeData._id)
+        AppState.reviews.splice(num, 1, new Review(response.data))
     }
 
 
