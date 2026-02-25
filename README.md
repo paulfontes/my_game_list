@@ -2,8 +2,8 @@
 
 My Game List is a personal web application that allows users to track, organize, and manage their video game library. The app was built to practice full-stack development concepts including CRUD operations, state management, and building user-focused features around a real-world use case.
 
-The project is deployed and actively usable as a live application.
-
+The project is deployed and actively usable as a live application.  
+my-game-list.org
 ---
 
 ## Features
